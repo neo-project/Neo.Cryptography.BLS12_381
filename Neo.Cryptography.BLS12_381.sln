@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32519.379
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{36DA9DE1-958C-4888-BD69-11C612A6AFCA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{5D525A2B-247C-4FDE-839C-1F5D42DF8AE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neo.Cryptography.BLS12_381", "src\Neo.Cryptography.BLS12_381\Neo.Cryptography.BLS12_381.csproj", "{5355A12D-A614-4C74-B2F8-C8FB0686D717}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neo.Cryptography.BLS12_381.Tests", "tests\Neo.Cryptography.BLS12_381.Tests\Neo.Cryptography.BLS12_381.Tests.csproj", "{8090336E-33F6-4A1B-BED7-0FEE79E2D1F5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5355A12D-A614-4C74-B2F8-C8FB0686D717}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5355A12D-A614-4C74-B2F8-C8FB0686D717}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5355A12D-A614-4C74-B2F8-C8FB0686D717}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5355A12D-A614-4C74-B2F8-C8FB0686D717}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8090336E-33F6-4A1B-BED7-0FEE79E2D1F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8090336E-33F6-4A1B-BED7-0FEE79E2D1F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8090336E-33F6-4A1B-BED7-0FEE79E2D1F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8090336E-33F6-4A1B-BED7-0FEE79E2D1F5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5355A12D-A614-4C74-B2F8-C8FB0686D717} = {36DA9DE1-958C-4888-BD69-11C612A6AFCA}
+		{8090336E-33F6-4A1B-BED7-0FEE79E2D1F5} = {5D525A2B-247C-4FDE-839C-1F5D42DF8AE3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {879715CD-5002-4C10-9EDD-A96741813CF7}
+	EndGlobalSection
+EndGlobal
