@@ -7,8 +7,10 @@ using static Neo.Cryptography.BLS12_381.GtConstants;
 
 namespace Neo.Cryptography.BLS12_381;
 
+[StructLayout(LayoutKind.Explicit, Size = Fp12.Size)]
 public readonly struct Gt : IEquatable<Gt>
 {
+    [FieldOffset(0)]
     public readonly Fp12 Value;
 
     public static readonly Gt Identity = new(in Fp12.One);
