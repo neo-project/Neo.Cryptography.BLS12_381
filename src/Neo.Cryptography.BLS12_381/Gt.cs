@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using static Neo.Cryptography.BLS12_381.ConstantTimeUtility;
 using static Neo.Cryptography.BLS12_381.GtConstants;
@@ -44,6 +45,53 @@ public readonly struct Gt : IEquatable<Gt>
     public override int GetHashCode()
     {
         return Value.GetHashCode();
+    }
+
+    public static Gt FromBytesArray(byte[] data)
+    {
+        if (data.Length != 576)
+            throw new FormatException($"The argument `{nameof(data)}` should contain 576 bytes.");
+        Fp[] FpArray = new Fp[12];
+        for (int i = 0; i < 12; i++)
+        {
+            int index = i * 48;
+            byte[] slice = data.Skip(index).Take(48).ToArray();
+            Fp fp = MemoryMarshal.Cast<byte, Fp>(slice)[0];
+            FpArray[i] = fp;
+        }
+
+        return new Gt(
+            new Fp12(
+                c0: new Fp6(
+                    c0: new Fp2(
+                        c0: FpArray[0],
+                        c1: FpArray[1]
+                    ),
+                    c1: new Fp2(
+                        c0: FpArray[2],
+                        c1: FpArray[3]
+                    ),
+                    c2: new Fp2(
+                        c0: FpArray[4],
+                        c1: FpArray[5]
+                    )
+                ),
+                c1: new Fp6(
+                    c0: new Fp2(
+                        c0: FpArray[6],
+                        c1: FpArray[7]
+                    ),
+                    c1: new Fp2(
+                        c0: FpArray[8],
+                        c1: FpArray[9]
+                    ),
+                    c2: new Fp2(
+                        c0: FpArray[10],
+                        c1: FpArray[11]
+                    )
+                )
+            )
+        );
     }
 
     public static Gt Random(RandomNumberGenerator rng)
@@ -105,5 +153,26 @@ public readonly struct Gt : IEquatable<Gt>
         }
 
         return acc;
+    }
+
+    public byte[] ToBytesArray()
+    {
+        Fp[] FpArray = {
+            Value.C0.C0.C0,
+            Value.C0.C0.C1,
+            Value.C0.C1.C0,
+            Value.C0.C1.C1,
+            Value.C0.C2.C0,
+            Value.C0.C2.C1,
+            Value.C1.C0.C0,
+            Value.C1.C0.C1,
+            Value.C1.C1.C0,
+            Value.C1.C1.C1,
+            Value.C1.C2.C0,
+            Value.C1.C2.C1,
+        };
+        var fp_span = new Span<Fp>(FpArray);
+        byte[] array = MemoryMarshal.Cast<Fp, byte>(fp_span).ToArray();
+        return array;
     }
 }
