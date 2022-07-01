@@ -4,8 +4,8 @@ namespace Neo.Cryptography.BLS12_381
 {
     public static class Helper
     {
-        private const int G1 = 96;
-        private const int G2 = 192;
+        private const int G1 = 48;
+        private const int G2 = 96;
         private const int Gt = 576;
 
         public static byte[] Add(this byte[] p1, byte[] p2)
@@ -16,10 +16,10 @@ namespace Neo.Cryptography.BLS12_381
             switch (p1.Length)
             {
                 case G1:
-                    result = new G1Affine(new G1Projective(G1Affine.FromUncompressed(p1)) + new G1Projective(G1Affine.FromUncompressed(p2))).ToUncompressed();
+                    result = new G1Affine(new G1Projective(G1Affine.FromCompressed(p1)) + new G1Projective(G1Affine.FromCompressed(p2))).ToCompressed();
                     break;
                 case G2:
-                    result = new G2Affine(new G2Projective(G2Affine.FromUncompressed(p1)) + new G2Projective(G2Affine.FromUncompressed(p2))).ToUncompressed();
+                    result = new G2Affine(new G2Projective(G2Affine.FromCompressed(p1)) + new G2Projective(G2Affine.FromCompressed(p2))).ToCompressed();
                     break;
                 case Gt:
                     Gt gt = MemoryMarshal.AsRef<Gt>(p1) + MemoryMarshal.AsRef<Gt>(p2);
@@ -38,10 +38,10 @@ namespace Neo.Cryptography.BLS12_381
             switch (p.Length)
             {
                 case G1:
-                    result = new G1Affine(G1Affine.FromUncompressed(p) * X).ToUncompressed();
+                    result = new G1Affine(G1Affine.FromCompressed(p) * X).ToCompressed();
                     break;
                 case G2:
-                    result = new G2Affine(G2Affine.FromUncompressed(p) * X).ToUncompressed();
+                    result = new G2Affine(G2Affine.FromCompressed(p) * X).ToCompressed();
                     break;
                 case Gt:
                     Gt gt = MemoryMarshal.AsRef<Gt>(p) * X;
@@ -57,7 +57,7 @@ namespace Neo.Cryptography.BLS12_381
         {
             if (p1.Length != G1 || p2.Length != G2)
                 throw new Exception($"Bls12381 operation fault, type:format, error:type mismatch");
-            Gt gt = Bls12.Pairing(G1Affine.FromUncompressed(p1), G2Affine.FromUncompressed(p2));
+            Gt gt = Bls12.Pairing(G1Affine.FromCompressed(p1), G2Affine.FromCompressed(p2));
             return MemoryMarshal.AsBytes(MemoryMarshal.CreateReadOnlySpan(ref gt, 1)).ToArray();
         }
     }
