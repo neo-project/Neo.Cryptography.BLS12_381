@@ -35,6 +35,15 @@ public readonly struct Fp2 : IEquatable<Fp2>, INumber<Fp2>
         C1 = c1;
     }
 
+    public static Fp2 FromBytes(ReadOnlySpan<byte> data)
+    {
+        if (data.Length != Size)
+            throw new FormatException($"The argument `{nameof(data)}` should contain {Size} bytes.");
+        Fp c0 = Fp.FromBytes(data[Fp.Size..]);
+        Fp c1 = Fp.FromBytes(data[..Fp.Size]);
+        return new(in c0, in c1);
+    }
+
     public static Fp2 Random(RandomNumberGenerator rng)
     {
         return new(Fp.Random(rng), Fp.Random(rng));
@@ -64,6 +73,21 @@ public readonly struct Fp2 : IEquatable<Fp2>, INumber<Fp2>
     public override int GetHashCode()
     {
         return C0.GetHashCode() ^ C1.GetHashCode();
+    }
+
+    public byte[] ToArray()
+    {
+        byte[] result = GC.AllocateUninitializedArray<byte>(Size);
+        TryWrite(result);
+        return result;
+    }
+
+    public bool TryWrite(Span<byte> buffer)
+    {
+        if (buffer.Length < Size) return false;
+        C0.TryWrite(buffer[Fp.Size..Size]);
+        C1.TryWrite(buffer[0..Fp.Size]);
+        return true;
     }
 
     public Fp2 FrobeniusMap()
