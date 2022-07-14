@@ -44,6 +44,15 @@ public readonly struct Fp12 : IEquatable<Fp12>, INumber<Fp12>
         C1 = c1;
     }
 
+    public static Fp12 FromBytes(ReadOnlySpan<byte> data)
+    {
+        if (data.Length != Size)
+            throw new FormatException($"The argument `{nameof(data)}` should contain {Size} bytes.");
+        Fp6 c0 = Fp6.FromBytes(data[Fp6.Size..]);
+        Fp6 c1 = Fp6.FromBytes(data[..Fp6.Size]);
+        return new(in c0, in c1);
+    }
+
     public static bool operator ==(in Fp12 a, in Fp12 b)
     {
         return a.C0 == b.C0 & a.C1 == b.C1;
@@ -68,6 +77,21 @@ public readonly struct Fp12 : IEquatable<Fp12>, INumber<Fp12>
     public override int GetHashCode()
     {
         return C0.GetHashCode() ^ C1.GetHashCode();
+    }
+
+    public byte[] ToArray()
+    {
+        byte[] result = GC.AllocateUninitializedArray<byte>(Size);
+        TryWrite(result);
+        return result;
+    }
+
+    public bool TryWrite(Span<byte> buffer)
+    {
+        if (buffer.Length < Size) return false;
+        C0.TryWrite(buffer[Fp6.Size..Size]);
+        C1.TryWrite(buffer[0..Fp6.Size]);
+        return true;
     }
 
     public static Fp12 Random(RandomNumberGenerator rng)

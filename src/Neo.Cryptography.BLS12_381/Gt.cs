@@ -23,6 +23,11 @@ public readonly struct Gt : IEquatable<Gt>
         Value = f;
     }
 
+    public static Gt FromBytes(ReadOnlySpan<byte> data)
+    {
+        return new(Fp12.FromBytes(data));
+    }
+
     public static bool operator ==(in Gt a, in Gt b)
     {
         return a.Value == b.Value;
@@ -47,6 +52,16 @@ public readonly struct Gt : IEquatable<Gt>
     public override int GetHashCode()
     {
         return Value.GetHashCode();
+    }
+
+    public byte[] ToArray()
+    {
+        return Value.ToArray();
+    }
+
+    public bool TryWrite(Span<byte> buffer)
+    {
+        return Value.TryWrite(buffer);
     }
 
     public static Gt Random(RandomNumberGenerator rng)

@@ -42,6 +42,16 @@ public readonly struct Fp6 : IEquatable<Fp6>, INumber<Fp6>
         C2 = c2;
     }
 
+    public static Fp6 FromBytes(ReadOnlySpan<byte> data)
+    {
+        if (data.Length != Size)
+            throw new FormatException($"The argument `{nameof(data)}` should contain {Size} bytes.");
+        Fp2 c0 = Fp2.FromBytes(data[(Fp2.Size * 2)..]);
+        Fp2 c1 = Fp2.FromBytes(data[Fp2.Size..(Fp2.Size * 2)]);
+        Fp2 c2 = Fp2.FromBytes(data[..Fp2.Size]);
+        return new(in c0, in c1, in c2);
+    }
+
     public static bool operator ==(in Fp6 a, in Fp6 b)
     {
         return a.C0 == b.C0 & a.C1 == b.C1 & a.C2 == b.C2;
@@ -66,6 +76,22 @@ public readonly struct Fp6 : IEquatable<Fp6>, INumber<Fp6>
     public override int GetHashCode()
     {
         return C0.GetHashCode() ^ C1.GetHashCode() ^ C2.GetHashCode();
+    }
+
+    public byte[] ToArray()
+    {
+        byte[] result = GC.AllocateUninitializedArray<byte>(Size);
+        TryWrite(result);
+        return result;
+    }
+
+    public bool TryWrite(Span<byte> buffer)
+    {
+        if (buffer.Length < Size) return false;
+        C0.TryWrite(buffer[(Fp2.Size * 2)..Size]);
+        C1.TryWrite(buffer[Fp2.Size..(Fp2.Size * 2)]);
+        C2.TryWrite(buffer[0..Fp2.Size]);
+        return true;
     }
 
     public static Fp6 Random(RandomNumberGenerator rng)
