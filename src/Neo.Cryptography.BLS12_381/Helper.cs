@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices;
-
 namespace Neo.Cryptography.BLS12_381
 {
     public static class Helper
@@ -22,8 +20,7 @@ namespace Neo.Cryptography.BLS12_381
                     result = new G2Affine(new G2Projective(G2Affine.FromCompressed(p1)) + new G2Projective(G2Affine.FromCompressed(p2))).ToCompressed();
                     break;
                 case Gt:
-                    Gt gt = MemoryMarshal.AsRef<Gt>(p1) + MemoryMarshal.AsRef<Gt>(p2);
-                    result = MemoryMarshal.AsBytes(MemoryMarshal.CreateReadOnlySpan(ref gt, 1)).ToArray();
+                    result = (BLS12_381.Gt.FromBytes(p1) + BLS12_381.Gt.FromBytes(p2)).ToArray();
                     break;
                 default:
                     throw new Exception($"Bls12381 operation fault, type:format, error:valid point length");
@@ -44,8 +41,7 @@ namespace Neo.Cryptography.BLS12_381
                     result = new G2Affine(G2Affine.FromCompressed(p) * X).ToCompressed();
                     break;
                 case Gt:
-                    Gt gt = MemoryMarshal.AsRef<Gt>(p) * X;
-                    result = MemoryMarshal.AsBytes(MemoryMarshal.CreateReadOnlySpan(ref gt, 1)).ToArray();
+                    result = (BLS12_381.Gt.FromBytes(p) * X).ToArray();
                     break;
                 default:
                     throw new Exception($"Bls12381 operation fault, type:format, error:valid point length");
@@ -57,8 +53,7 @@ namespace Neo.Cryptography.BLS12_381
         {
             if (p1.Length != G1 || p2.Length != G2)
                 throw new Exception($"Bls12381 operation fault, type:format, error:type mismatch");
-            Gt gt = Bls12.Pairing(G1Affine.FromCompressed(p1), G2Affine.FromCompressed(p2));
-            return MemoryMarshal.AsBytes(MemoryMarshal.CreateReadOnlySpan(ref gt, 1)).ToArray();
+            return Bls12.Pairing(G1Affine.FromCompressed(p1), G2Affine.FromCompressed(p2)).ToArray();
         }
     }
 }
