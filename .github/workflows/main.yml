@@ -3,6 +3,7 @@ name: .NET Test and Publish
 on:
   push:
     branches: [ "master" ]
+  pull_request:
 
 env:
   DOTNET_VERSION: 6.0.x
