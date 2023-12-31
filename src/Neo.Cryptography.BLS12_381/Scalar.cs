@@ -16,7 +16,7 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
     public const int SizeL = Size / sizeof(ulong);
     public static readonly Scalar Default = new();
 
-    static int INumber<Scalar>.Size => Size;
+    //static int INumber<Scalar>.Size => Size;
     public static ref readonly Scalar Zero => ref Default;
     public static ref readonly Scalar One => ref R;
 
@@ -27,7 +27,7 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
         // This internal method is only used by the constants classes.
         // The data must be in the correct format.
         // So, there is no need to do any checks.
-        this = MemoryMarshal.AsRef<Scalar>(MemoryMarshal.Cast<ulong, byte>(values));
+        this = Unsafe.As<byte, Scalar>(ref MemoryMarshal.GetReference(MemoryMarshal.Cast<ulong, byte>(values)));
     }
 
     public Scalar(ulong value)
@@ -49,7 +49,7 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
         if (data.Length != Size)
             throw new FormatException($"The argument `{nameof(data)}` should contain {Size} bytes.");
 
-        ref readonly Scalar ref_ = ref MemoryMarshal.AsRef<Scalar>(data);
+        ref readonly Scalar ref_ = ref Unsafe.As<byte, Scalar>(ref MemoryMarshal.GetReference(data));
 
         try
         {

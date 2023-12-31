@@ -1,12 +1,31 @@
+using System.Reflection;
 using static Neo.Cryptography.BLS12_381.Constants;
 
 namespace Neo.Cryptography.BLS12_381;
 
 static class MillerLoopUtility
 {
+    public static T SquareOutput<T, D>(in T f) where D : IMillerLoopDriver<T>
+    {
+        MethodInfo methodInfo = typeof(D).GetMethod("SquareOutput", BindingFlags.Static | BindingFlags.Public);
+        return (T)methodInfo?.Invoke(null, new object[] { f! })!;
+    }
+
+    public static T Conjugate<T, D>(in T f) where D : IMillerLoopDriver<T>
+    {
+        MethodInfo methodInfo = typeof(D).GetMethod("Conjugate", BindingFlags.Static | BindingFlags.Public);
+        return (T)methodInfo?.Invoke(null, new object[] { f! })!;
+    }
+
+    public static T One<T, D>() where D : IMillerLoopDriver<T>
+    {
+        var methodInfo = typeof(D).GetMethod("get_One", BindingFlags.Static | BindingFlags.Public);
+        return (T)methodInfo?.Invoke(null, null)!;
+    }
+
     public static T MillerLoop<T, D>(D driver) where D : IMillerLoopDriver<T>
     {
-        var f = D.One;
+        var f = One<T, D>();
 
         var found_one = false;
         foreach (var i in Enumerable.Range(0, 64).Reverse().Select(b => ((BLS_X >> 1 >> b) & 1) == 1))
@@ -22,13 +41,13 @@ static class MillerLoopUtility
             if (i)
                 f = driver.AdditionStep(f);
 
-            f = D.SquareOutput(f);
+            f = SquareOutput<T, D>(f);
         }
 
         f = driver.DoublingStep(f);
 
         if (BLS_X_IS_NEGATIVE)
-            f = D.Conjugate(f);
+            f = Conjugate<T, D>(f);
 
         return f;
     }

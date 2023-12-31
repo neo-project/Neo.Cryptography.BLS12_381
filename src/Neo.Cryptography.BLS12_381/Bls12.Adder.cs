@@ -29,10 +29,10 @@ partial class Bls12
             return Ell(in f, in coeffs, in P);
         }
 
-        static Fp12 IMillerLoopDriver<Fp12>.SquareOutput(in Fp12 f) => f.Square();
+        public static Fp12 SquareOutput(in Fp12 f) => f.Square();
 
-        static Fp12 IMillerLoopDriver<Fp12>.Conjugate(in Fp12 f) => f.Conjugate();
+        public static Fp12 Conjugate(in Fp12 f) => f.Conjugate();
 
-        static Fp12 IMillerLoopDriver<Fp12>.One => Fp12.One;
+        public static Fp12 One => Fp12.One;
     }
 }

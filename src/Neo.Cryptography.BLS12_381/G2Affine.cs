@@ -103,7 +103,7 @@ public readonly struct G2Affine : IEquatable<G2Affine>
         // to guard against implementation mistakes we do not assume this.
         var x = ConditionalSelect(in X, in Fp2.Zero, Infinity);
 
-        var res = GC.AllocateUninitializedArray<byte>(96);
+        var res = new byte[96];
 
         x.C1.TryWrite(res.AsSpan(0..48));
         x.C0.TryWrite(res.AsSpan(48..96));
@@ -124,7 +124,7 @@ public readonly struct G2Affine : IEquatable<G2Affine>
 
     public byte[] ToUncompressed()
     {
-        var res = GC.AllocateUninitializedArray<byte>(192);
+        var res = new byte[192];
 
         var x = ConditionalSelect(in X, in Fp2.Zero, Infinity);
         var y = ConditionalSelect(in Y, in Fp2.Zero, Infinity);

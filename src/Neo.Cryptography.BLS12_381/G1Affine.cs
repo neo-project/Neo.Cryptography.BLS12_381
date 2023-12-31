@@ -142,7 +142,7 @@ public readonly struct G1Affine : IEquatable<G1Affine>
 
     public byte[] ToUncompressed()
     {
-        byte[] res = GC.AllocateUninitializedArray<byte>(96);
+        byte[] res = new byte[96];
 
         ConditionalSelect(in X, in Fp.Zero, Infinity).TryWrite(res.AsSpan(0..48));
         ConditionalSelect(in Y, in Fp.Zero, Infinity).TryWrite(res.AsSpan(48..96));

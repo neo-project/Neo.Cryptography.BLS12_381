@@ -18,7 +18,7 @@ public readonly struct Fp2 : IEquatable<Fp2>, INumber<Fp2>
     private static readonly Fp2 _zero = new();
     private static readonly Fp2 _one = new(in Fp.One);
 
-    static int INumber<Fp2>.Size => Size;
+    //static int INumber<Fp2>.Size => Size;
     public static ref readonly Fp2 Zero => ref _zero;
     public static ref readonly Fp2 One => ref _one;
 
@@ -77,7 +77,7 @@ public readonly struct Fp2 : IEquatable<Fp2>, INumber<Fp2>
 
     public byte[] ToArray()
     {
-        byte[] result = GC.AllocateUninitializedArray<byte>(Size);
+        byte[] result = new byte[Size];
         TryWrite(result);
         return result;
     }

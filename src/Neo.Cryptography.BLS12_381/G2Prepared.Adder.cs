@@ -31,10 +31,10 @@ partial class G2Prepared
             return null;
         }
 
-        static object? IMillerLoopDriver<object?>.SquareOutput(in object? f) => null;
+        public static object? SquareOutput(in object? f) => null;
 
-        static object? IMillerLoopDriver<object?>.Conjugate(in object? f) => null;
+        public static object? Conjugate(in object? f) => null;
 
-        static object? IMillerLoopDriver<object?>.One => null;
+        public static object? One => null;
     }
 }
