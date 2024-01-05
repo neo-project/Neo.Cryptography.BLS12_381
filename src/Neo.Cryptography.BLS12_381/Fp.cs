@@ -9,15 +9,15 @@ using static Neo.Cryptography.BLS12_381.MathUtility;
 
 namespace Neo.Cryptography.BLS12_381;
 
-[StructLayout(LayoutKind.Explicit, Size = Size)]
+[StructLayout(LayoutKind.Explicit, Size = SIZE)]
 public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
 {
-    public const int Size = 48;
-    public const int SizeL = Size / sizeof(ulong);
+    public const int SIZE = 48;
+    public const int LSIZE = SIZE / sizeof(ulong);
 
     private static readonly Fp _zero = new();
 
-    static int INumber<Fp>.Size => Size;
+    public int Size => SIZE;
     public static ref readonly Fp Zero => ref _zero;
     public static ref readonly Fp One => ref R;
 
@@ -25,10 +25,10 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
 
     public static Fp FromBytes(ReadOnlySpan<byte> data)
     {
-        if (data.Length != Size)
-            throw new FormatException($"The argument `{nameof(data)}` should contain {Size} bytes.");
+        if (data.Length != SIZE)
+            throw new FormatException($"The argument `{nameof(data)}` should contain {SIZE} bytes.");
 
-        Span<ulong> tmp = stackalloc ulong[SizeL];
+        Span<ulong> tmp = stackalloc ulong[LSIZE];
         BinaryPrimitives.TryReadUInt64BigEndian(data[0..8], out tmp[5]);
         BinaryPrimitives.TryReadUInt64BigEndian(data[8..16], out tmp[4]);
         BinaryPrimitives.TryReadUInt64BigEndian(data[16..24], out tmp[3]);
@@ -68,7 +68,7 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
 
     public static Fp Random(RandomNumberGenerator rng)
     {
-        Span<byte> buffer = stackalloc byte[Size * 2];
+        Span<byte> buffer = stackalloc byte[SIZE * 2];
         rng.GetBytes(buffer);
         Span<Fp> d = MemoryMarshal.Cast<byte, Fp>(buffer);
         return d[0] * R2 + d[1] * R3;
@@ -277,12 +277,12 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
             var (t0, t1, t2, t3, t4, t5, t6) = (u[0], u[1], u[2], u[3], u[4], u[5], 0ul);
             for (int i = 0; i < length; i++)
             {
-                (t0, carry) = Mac(t0, au[i * SizeL + j], bu[i * SizeL + 0], 0);
-                (t1, carry) = Mac(t1, au[i * SizeL + j], bu[i * SizeL + 1], carry);
-                (t2, carry) = Mac(t2, au[i * SizeL + j], bu[i * SizeL + 2], carry);
-                (t3, carry) = Mac(t3, au[i * SizeL + j], bu[i * SizeL + 3], carry);
-                (t4, carry) = Mac(t4, au[i * SizeL + j], bu[i * SizeL + 4], carry);
-                (t5, carry) = Mac(t5, au[i * SizeL + j], bu[i * SizeL + 5], carry);
+                (t0, carry) = Mac(t0, au[i * LSIZE + j], bu[i * LSIZE + 0], 0);
+                (t1, carry) = Mac(t1, au[i * LSIZE + j], bu[i * LSIZE + 1], carry);
+                (t2, carry) = Mac(t2, au[i * LSIZE + j], bu[i * LSIZE + 2], carry);
+                (t3, carry) = Mac(t3, au[i * LSIZE + j], bu[i * LSIZE + 3], carry);
+                (t4, carry) = Mac(t4, au[i * LSIZE + j], bu[i * LSIZE + 4], carry);
+                (t5, carry) = Mac(t5, au[i * LSIZE + j], bu[i * LSIZE + 5], carry);
                 (t6, _) = Adc(t6, 0, carry);
             }
 
@@ -364,7 +364,7 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
     public static Fp operator *(in Fp a, in Fp b)
     {
         ReadOnlySpan<ulong> s = a.GetSpanU64(), r = b.GetSpanU64();
-        Span<ulong> t = stackalloc ulong[SizeL * 2];
+        Span<ulong> t = stackalloc ulong[LSIZE * 2];
         ulong carry;
 
         (t[0], carry) = Mac(0, s[0], r[0], 0);
