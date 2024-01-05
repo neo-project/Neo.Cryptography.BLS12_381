@@ -234,7 +234,7 @@ public class UT_Fp
             Assert.AreEqual(b, a);
         }
 
-        Assert.AreEqual(-Fp.One, Fp.FromBytes(new byte[]
+        Assert.AreEqual(-Fp.ONE, Fp.FromBytes(new byte[]
         {
             26, 1, 17, 234, 57, 127, 230, 154, 75, 27, 167, 182, 67, 75, 172, 215, 100, 119, 75,
             132, 243, 133, 18, 191, 103, 48, 210, 160, 246, 176, 246, 36, 30, 171, 255, 254, 177,
@@ -303,14 +303,14 @@ public class UT_Fp
         });
 
         Assert.AreEqual(b, a.Invert());
-        Assert.ThrowsException<DivideByZeroException>(() => Fp.Zero.Invert());
+        Assert.ThrowsException<DivideByZeroException>(() => Fp.ZERO.Invert());
     }
 
     [TestMethod]
     public void TestLexicographicLargest()
     {
-        Assert.IsFalse(Fp.Zero.LexicographicallyLargest());
-        Assert.IsFalse(Fp.One.LexicographicallyLargest());
+        Assert.IsFalse(Fp.ZERO.LexicographicallyLargest());
+        Assert.IsFalse(Fp.ONE.LexicographicallyLargest());
         Assert.IsFalse(Fp.FromRawUnchecked(new ulong[]
         {
             0xa1fa_ffff_fffe_5557,

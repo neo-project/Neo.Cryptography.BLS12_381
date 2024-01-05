@@ -14,11 +14,12 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
 {
     public const int Size = 32;
     public const int SizeL = Size / sizeof(ulong);
-    public static readonly Scalar Default = new();
+    public static readonly Scalar ZERO = new();
+    public static readonly Scalar ONE = R;
 
     static int INumber<Scalar>.Size => Size;
-    public static ref readonly Scalar Zero => ref Default;
-    public static ref readonly Scalar One => ref R;
+    public ref readonly Scalar Zero => ref ZERO;
+    public ref readonly Scalar One => ref ONE;
 
     public bool IsZero => this == Zero;
 

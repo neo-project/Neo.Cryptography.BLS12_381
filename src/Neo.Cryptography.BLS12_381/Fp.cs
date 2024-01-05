@@ -15,11 +15,12 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
     public const int Size = 48;
     public const int SizeL = Size / sizeof(ulong);
 
-    private static readonly Fp _zero = new();
+    public static readonly Fp ZERO = new();
+    public static readonly Fp ONE = R;
 
     static int INumber<Fp>.Size => Size;
-    public static ref readonly Fp Zero => ref _zero;
-    public static ref readonly Fp One => ref R;
+    public ref readonly Fp Zero => ref ZERO;
+    public ref readonly Fp One => ref ONE;
 
     public bool IsZero => this == Zero;
 

@@ -339,7 +339,7 @@ public class UT_Fp2
             0xc52a_8b8d_6387_695d,
             0x9fb4_e61d_1e83_eac5,
             0x005c_b922_afe8_4dc7,
-        }), Fp.Zero);
+        }), Fp.ZERO);
 
         Assert.AreEqual(b, b.Sqrt().Square());
 
@@ -353,7 +353,7 @@ public class UT_Fp2
             0x755d_6e3d_fe1f_fc12,
             0xd36c_d6db_5547_e905,
             0x02f8_c8ec_bf18_67bb,
-        }), Fp.Zero);
+        }), Fp.ZERO);
 
         Assert.AreEqual(c, c.Sqrt().Square());
 
@@ -418,14 +418,14 @@ public class UT_Fp2
         }));
         Assert.AreEqual(b, a.Invert());
 
-        Assert.ThrowsException<DivideByZeroException>(() => Fp2.Zero.Invert());
+        Assert.ThrowsException<DivideByZeroException>(() => Fp2.ZERO.Invert());
     }
 
     [TestMethod]
     public void TestLexicographicLargest()
     {
-        Assert.IsFalse(Fp2.Zero.LexicographicallyLargest());
-        Assert.IsFalse(Fp2.One.LexicographicallyLargest());
+        Assert.IsFalse(Fp2.ZERO.LexicographicallyLargest());
+        Assert.IsFalse(Fp2.ONE.LexicographicallyLargest());
         Assert.IsTrue(new Fp2(Fp.FromRawUnchecked(new ulong[]
         {
             0x1128_ecad_6754_9455,
@@ -468,7 +468,7 @@ public class UT_Fp2
             0xe98a_d408_11f5_fc2b,
             0x736c_3a59_232d_511d,
             0x10ac_d42d_29cf_cbb6,
-        }), Fp.Zero).LexicographicallyLargest());
+        }), Fp.ZERO).LexicographicallyLargest());
         Assert.IsTrue(new Fp2(-Fp.FromRawUnchecked(new ulong[]
         {
             0x1128_ecad_6754_9455,
@@ -477,6 +477,6 @@ public class UT_Fp2
             0xe98a_d408_11f5_fc2b,
             0x736c_3a59_232d_511d,
             0x10ac_d42d_29cf_cbb6,
-        }), Fp.Zero).LexicographicallyLargest());
+        }), Fp.ZERO).LexicographicallyLargest());
     }
 }

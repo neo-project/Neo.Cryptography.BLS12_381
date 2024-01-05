@@ -16,8 +16,8 @@ public readonly struct G1Projective : IEquatable<G1Projective>
     [FieldOffset(Fp.Size * 2)]
     public readonly Fp Z;
 
-    public static readonly G1Projective Identity = new(in Fp.Zero, in Fp.One, in Fp.Zero);
-    public static readonly G1Projective Generator = new(in GeneratorX, in GeneratorY, in Fp.One);
+    public static readonly G1Projective Identity = new(in Fp.ZERO, in Fp.ONE, in Fp.ZERO);
+    public static readonly G1Projective Generator = new(in GeneratorX, in GeneratorY, in Fp.ONE);
 
     public bool IsIdentity => Z.IsZero;
     public bool IsOnCurve => ((Y.Square() * Z) == (X.Square() * X + Z.Square() * Z * B)) | Z.IsZero;
@@ -30,7 +30,7 @@ public readonly struct G1Projective : IEquatable<G1Projective>
     }
 
     public G1Projective(in G1Affine p)
-        : this(in p.X, in p.Y, ConditionalSelect(in Fp.One, in Fp.Zero, p.Infinity))
+        : this(in p.X, in p.Y, ConditionalSelect(in Fp.ONE, in Fp.ZERO, p.Infinity))
     {
     }
 
@@ -262,7 +262,7 @@ public readonly struct G1Projective : IEquatable<G1Projective>
             throw new ArgumentException($"{nameof(p)} and {nameof(q)} must have the same length.");
 
         Span<Fp> x = stackalloc Fp[length];
-        Fp acc = Fp.One;
+        Fp acc = Fp.ONE;
         for (int i = 0; i < length; i++)
         {
             x[i] = acc;

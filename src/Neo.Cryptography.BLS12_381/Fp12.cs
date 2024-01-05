@@ -14,27 +14,27 @@ public readonly struct Fp12 : IEquatable<Fp12>, INumber<Fp12>
 
     public const int Size = Fp6.Size * 2;
 
-    private static readonly Fp12 _zero = new();
-    private static readonly Fp12 _one = new(in Fp6.One);
+    public static readonly Fp12 ZERO = new();
+    public static readonly Fp12 ONE = new(in Fp6.ONE);
 
     static int INumber<Fp12>.Size => Size;
-    public static ref readonly Fp12 Zero => ref _zero;
-    public static ref readonly Fp12 One => ref _one;
+    public ref readonly Fp12 Zero => ref ZERO;
+    public ref readonly Fp12 One => ref ONE;
 
     public bool IsZero => C0.IsZero & C1.IsZero;
 
     public Fp12(in Fp f)
-        : this(new Fp6(in f), in Fp6.Zero)
+        : this(new Fp6(in f), in Fp6.ZERO)
     {
     }
 
     public Fp12(in Fp2 f)
-        : this(new Fp6(in f), in Fp6.Zero)
+        : this(new Fp6(in f), in Fp6.ZERO)
     {
     }
 
     public Fp12(in Fp6 f)
-        : this(in f, in Fp6.Zero)
+        : this(in f, in Fp6.ZERO)
     {
     }
 

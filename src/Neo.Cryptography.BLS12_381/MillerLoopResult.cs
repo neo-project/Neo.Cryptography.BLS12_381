@@ -72,7 +72,7 @@ readonly struct MillerLoopResult
         static Fp12 CycolotomicExp(in Fp12 f)
         {
             var x = BLS_X;
-            var tmp = Fp12.One;
+            var tmp = Fp12.ONE;
             var found_one = false;
             foreach (bool i in Enumerable.Range(0, 64).Select(b => ((x >> b) & 1) == 1).Reverse())
             {

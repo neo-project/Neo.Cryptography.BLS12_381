@@ -10,7 +10,7 @@ public readonly struct Gt : IEquatable<Gt>
 {
     public readonly Fp12 Value;
 
-    public static readonly Gt Identity = new(in Fp12.One);
+    public static readonly Gt Identity = new(in Fp12.ONE);
     public static readonly Gt Generator = new(in GeneratorValue);
 
     public bool IsIdentity => this == Identity;

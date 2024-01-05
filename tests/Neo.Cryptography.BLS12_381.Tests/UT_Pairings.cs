@@ -52,7 +52,7 @@ public class UT_Pairings
     {
         Assert.AreEqual(
             Gt.Identity,
-            new MillerLoopResult(Fp12.One).FinalExponentiation()
+            new MillerLoopResult(Fp12.ONE).FinalExponentiation()
         );
     }
 }

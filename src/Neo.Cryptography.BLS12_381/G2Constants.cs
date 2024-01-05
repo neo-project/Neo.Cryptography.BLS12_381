@@ -59,7 +59,7 @@ static class G2Constants
     public static readonly Fp2 B3 = B + B + B;
 
     // 1 / ((u+1) ^ ((q-1)/3))
-    public static readonly Fp2 PsiCoeffX = new(in Fp.Zero, Fp.FromRawUnchecked(new ulong[]
+    public static readonly Fp2 PsiCoeffX = new(in Fp.ZERO, Fp.FromRawUnchecked(new ulong[]
     {
         0x890dc9e4867545c3,
         0x2af322533285a5d5,
@@ -97,5 +97,5 @@ static class G2Constants
         0x8eb60ebe01bacb9e,
         0x03f97d6e83d050d2,
         0x18f0206554638741
-    }), in Fp.Zero);
+    }), in Fp.ZERO);
 }

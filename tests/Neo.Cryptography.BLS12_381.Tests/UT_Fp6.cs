@@ -163,6 +163,6 @@ public class UT_Fp6
         Assert.AreEqual((a + b) * c.Square(), (c * c * a) + (c * c * b));
 
         Assert.AreEqual(a.Invert() * b.Invert(), (a * b).Invert());
-        Assert.AreEqual(Fp6.One, a.Invert() * a);
+        Assert.AreEqual(Fp6.ONE, a.Invert() * a);
     }
 }

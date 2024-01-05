@@ -10,7 +10,7 @@ public readonly struct G2Affine : IEquatable<G2Affine>
     public readonly Fp2 Y;
     public readonly bool Infinity;
 
-    public static readonly G2Affine Identity = new(in Fp2.Zero, in Fp2.One, true);
+    public static readonly G2Affine Identity = new(in Fp2.ZERO, in Fp2.ONE, true);
     public static readonly G2Affine Generator = new(in GeneratorX, in GeneratorY, false);
 
     public bool IsIdentity => Infinity;
@@ -44,7 +44,7 @@ public readonly struct G2Affine : IEquatable<G2Affine>
     {
         bool s = p.Z.TryInvert(out Fp2 zinv);
 
-        zinv = ConditionalSelect(in Fp2.Zero, in zinv, s);
+        zinv = ConditionalSelect(in Fp2.ZERO, in zinv, s);
         Fp2 x = p.X * zinv;
         Fp2 y = p.Y * zinv;
 
@@ -87,7 +87,7 @@ public readonly struct G2Affine : IEquatable<G2Affine>
     {
         return new G2Affine(
             in a.X,
-            ConditionalSelect(-a.Y, in Fp2.One, a.Infinity),
+            ConditionalSelect(-a.Y, in Fp2.ONE, a.Infinity),
             a.Infinity
         );
     }
@@ -101,7 +101,7 @@ public readonly struct G2Affine : IEquatable<G2Affine>
     {
         // Strictly speaking, self.x is zero already when self.infinity is true, but
         // to guard against implementation mistakes we do not assume this.
-        var x = ConditionalSelect(in X, in Fp2.Zero, Infinity);
+        var x = ConditionalSelect(in X, in Fp2.ZERO, Infinity);
 
         var res = GC.AllocateUninitializedArray<byte>(96);
 
@@ -126,8 +126,8 @@ public readonly struct G2Affine : IEquatable<G2Affine>
     {
         var res = GC.AllocateUninitializedArray<byte>(192);
 
-        var x = ConditionalSelect(in X, in Fp2.Zero, Infinity);
-        var y = ConditionalSelect(in Y, in Fp2.Zero, Infinity);
+        var x = ConditionalSelect(in X, in Fp2.ZERO, Infinity);
+        var y = ConditionalSelect(in Y, in Fp2.ZERO, Infinity);
 
         x.C1.TryWrite(res.AsSpan(0..48));
         x.C0.TryWrite(res.AsSpan(48..96));

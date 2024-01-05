@@ -17,9 +17,9 @@ public class UT_G1
             0xe6, 0xf8, 0x96, 0x88, 0xde, 0x17, 0xd8, 0x13, 0x62, 0x0a, 0x00, 0x02, 0x2e, 0x01,
             0xff, 0xff, 0xff, 0xfe, 0xff, 0xfe
         }), BETA);
-        Assert.AreNotEqual(Fp.One, BETA);
-        Assert.AreNotEqual(Fp.One, BETA * BETA);
-        Assert.AreEqual(Fp.One, BETA * BETA * BETA);
+        Assert.AreNotEqual(Fp.ONE, BETA);
+        Assert.AreNotEqual(Fp.ONE, BETA * BETA);
+        Assert.AreEqual(Fp.ONE, BETA * BETA * BETA);
     }
 
     [TestMethod]
@@ -289,7 +289,7 @@ public class UT_G1
                 0x8c6d_883d_2516_c9a2,
                 0x0bc3_b8d5_fb04_47f7,
                 0x07bf_a4c7_210f_4f44,
-            }), in Fp.One)), new G1Affine(c));
+            }), in Fp.ONE)), new G1Affine(c));
             Assert.IsFalse(c.IsIdentity);
             Assert.IsTrue(c.IsOnCurve);
         }
@@ -395,7 +395,7 @@ public class UT_G1
                 0x8c6d_883d_2516_c9a2,
                 0x0bc3_b8d5_fb04_47f7,
                 0x07bf_a4c7_210f_4f44
-            }), Fp.One)), new G1Affine(c));
+            }), Fp.ONE)), new G1Affine(c));
             Assert.IsFalse(c.IsIdentity);
             Assert.IsTrue(c.IsOnCurve);
         }

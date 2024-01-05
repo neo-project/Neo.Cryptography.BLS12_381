@@ -33,6 +33,6 @@ partial class Bls12
 
         static Fp12 IMillerLoopDriver<Fp12>.Conjugate(in Fp12 f) => f.Conjugate();
 
-        static Fp12 IMillerLoopDriver<Fp12>.One => Fp12.One;
+        static Fp12 IMillerLoopDriver<Fp12>.One => Fp12.ONE;
     }
 }

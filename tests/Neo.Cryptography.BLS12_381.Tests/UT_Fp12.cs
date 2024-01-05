@@ -314,7 +314,7 @@ public class UT_Fp12
         Assert.AreEqual((a + b) * c.Square(), (c * c * a) + (c * c * b));
 
         Assert.AreEqual(a.Invert() * b.Invert(), (a * b).Invert());
-        Assert.AreEqual(Fp12.One, a.Invert() * a);
+        Assert.AreEqual(Fp12.ONE, a.Invert() * a);
 
         Assert.AreNotEqual(a, a.FrobeniusMap());
         Assert.AreEqual(

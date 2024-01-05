@@ -309,7 +309,7 @@ public class UT_G2
                 0x8eb6_0ebe_01ba_cb9e,
                 0x03f9_7d6e_83d0_50d2,
                 0x18f0_2065_5463_8741
-            }), Fp.Zero);
+            }), Fp.ZERO);
             beta = beta.Square();
             var a = G2Projective.Generator.Double().Double();
             var b = new G2Projective(a.X * beta, -a.Y, in a.Z);
@@ -351,7 +351,7 @@ public class UT_G2
                 0x4cb8_932d_d31d_af28,
                 0x62bb_fac6_db05_2a54,
                 0x11f9_5c16_d14c_3bbe
-            })), Fp2.One)));
+            })), Fp2.ONE)));
             Assert.IsFalse(c.IsIdentity);
             Assert.IsTrue(c.IsOnCurve);
         }
@@ -452,7 +452,7 @@ public class UT_G2
                 0x8eb6_0ebe_01ba_cb9e,
                 0x03f9_7d6e_83d0_50d2,
                 0x18f0_2065_5463_8741
-            }), Fp.Zero);
+            }), Fp.ZERO);
             beta = beta.Square();
             var _a = G2Projective.Generator.Double().Double();
             var b = new G2Projective(_a.X * beta, -_a.Y, in _a.Z);
@@ -493,7 +493,7 @@ public class UT_G2
                 0x4cb8_932d_d31d_af28,
                 0x62bb_fac6_db05_2a54,
                 0x11f9_5c16_d14c_3bbe
-            })), Fp2.One)), new G2Affine(c));
+            })), Fp2.ONE)), new G2Affine(c));
             Assert.IsFalse(c.IsIdentity);
             Assert.IsTrue(c.IsOnCurve);
         }

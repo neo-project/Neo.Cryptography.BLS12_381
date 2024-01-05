@@ -16,22 +16,22 @@ public readonly struct Fp6 : IEquatable<Fp6>, INumber<Fp6>
 
     public const int Size = Fp2.Size * 3;
 
-    private static readonly Fp6 _zero = new();
-    private static readonly Fp6 _one = new(in Fp2.One);
+    public static readonly Fp6 ZERO = new();
+    public static readonly Fp6 ONE = new(in Fp2.ONE);
 
     static int INumber<Fp6>.Size => Size;
-    public static ref readonly Fp6 Zero => ref _zero;
-    public static ref readonly Fp6 One => ref _one;
+    public ref readonly Fp6 Zero => ref ZERO;
+    public ref readonly Fp6 One => ref ONE;
 
     public bool IsZero => C0.IsZero & C1.IsZero & C2.IsZero;
 
     public Fp6(in Fp f)
-        : this(new Fp2(in f), in Fp2.Zero, in Fp2.Zero)
+        : this(new Fp2(in f), in Fp2.ZERO, in Fp2.ZERO)
     {
     }
 
     public Fp6(in Fp2 f)
-        : this(in f, in Fp2.Zero, in Fp2.Zero)
+        : this(in f, in Fp2.ZERO, in Fp2.ZERO)
     {
     }
 
@@ -143,7 +143,7 @@ public readonly struct Fp6 : IEquatable<Fp6>, INumber<Fp6>
         var c2 = C2.FrobeniusMap();
 
         // c1 = c1 * (u + 1)^((p - 1) / 3)
-        c1 *= new Fp2(in Fp.Zero, Fp.FromRawUnchecked(new ulong[]
+        c1 *= new Fp2(in Fp.ZERO, Fp.FromRawUnchecked(new ulong[]
         {
             0xcd03_c9e4_8671_f071,
             0x5dab_2246_1fcd_a5d2,
@@ -162,7 +162,7 @@ public readonly struct Fp6 : IEquatable<Fp6>, INumber<Fp6>
             0xa20d_1b8c_7e88_1024,
             0x14e4_f04f_e2db_9068,
             0x14e5_6d3f_1564_853a
-        }), in Fp.Zero);
+        }), in Fp.ZERO);
 
         return new Fp6(c0, c1, c2);
     }

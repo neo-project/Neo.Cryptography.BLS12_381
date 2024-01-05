@@ -18,8 +18,8 @@ public readonly struct G2Projective : IEquatable<G2Projective>
     [FieldOffset(Fp2.Size * 2)]
     public readonly Fp2 Z;
 
-    public static readonly G2Projective Identity = new(in Fp2.Zero, in Fp2.One, in Fp2.Zero);
-    public static readonly G2Projective Generator = new(in GeneratorX, in GeneratorY, in Fp2.One);
+    public static readonly G2Projective Identity = new(in Fp2.ZERO, in Fp2.ONE, in Fp2.ZERO);
+    public static readonly G2Projective Generator = new(in GeneratorX, in GeneratorY, in Fp2.ONE);
 
     public bool IsIdentity => Z.IsZero;
     public bool IsOnCurve => ((Y.Square() * Z) == (X.Square() * X + Z.Square() * Z * B)) | Z.IsZero; // Y^2 Z = X^3 + b Z^3
@@ -35,7 +35,7 @@ public readonly struct G2Projective : IEquatable<G2Projective>
     {
         X = p.X;
         Y = p.Y;
-        Z = ConditionalSelect(in Fp2.One, in Fp2.Zero, p.Infinity);
+        Z = ConditionalSelect(in Fp2.ONE, in Fp2.ZERO, p.Infinity);
     }
 
     public static bool operator ==(in G2Projective a, in G2Projective b)
@@ -305,7 +305,7 @@ public readonly struct G2Projective : IEquatable<G2Projective>
             throw new ArgumentException($"{nameof(p)} and {nameof(q)} must have the same length.");
 
         Span<Fp2> x = stackalloc Fp2[length];
-        Fp2 acc = Fp2.One;
+        Fp2 acc = Fp2.ONE;
         for (int i = 0; i < length; i++)
         {
             // We use the `x` field of `G2Affine` to store the product

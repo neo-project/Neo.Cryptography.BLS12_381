@@ -14,7 +14,7 @@ public static partial class Bls12
         var adder = new Adder(p2, q2);
 
         var tmp = MillerLoop<Fp12, Adder>(adder);
-        var tmp2 = new MillerLoopResult(ConditionalSelect(in tmp, in Fp12.One, either_identity));
+        var tmp2 = new MillerLoopResult(ConditionalSelect(in tmp, in Fp12.ONE, either_identity));
         return tmp2.FinalExponentiation();
     }
 }

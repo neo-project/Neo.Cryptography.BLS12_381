@@ -33,20 +33,20 @@ public class UT_Scalar
     [TestMethod]
     public void TestToString()
     {
-        Assert.AreEqual("0x0000000000000000000000000000000000000000000000000000000000000000", Scalar.Zero.ToString());
-        Assert.AreEqual("0x0000000000000000000000000000000000000000000000000000000000000001", Scalar.One.ToString());
+        Assert.AreEqual("0x0000000000000000000000000000000000000000000000000000000000000000", Scalar.ZERO.ToString());
+        Assert.AreEqual("0x0000000000000000000000000000000000000000000000000000000000000001", Scalar.ONE.ToString());
         Assert.AreEqual("0x1824b159acc5056f998c4fefecbc4ff55884b7fa0003480200000001fffffffe", R2.ToString());
     }
 
     [TestMethod]
     public void TestEquality()
     {
-        Assert.AreEqual(Scalar.Zero, Scalar.Zero);
-        Assert.AreEqual(Scalar.One, Scalar.One);
+        Assert.AreEqual(Scalar.ZERO, Scalar.ZERO);
+        Assert.AreEqual(Scalar.ONE, Scalar.ONE);
         Assert.AreEqual(R2, R2);
 
-        Assert.AreNotEqual(Scalar.Zero, Scalar.One);
-        Assert.AreNotEqual(Scalar.One, R2);
+        Assert.AreNotEqual(Scalar.ZERO, Scalar.ONE);
+        Assert.AreNotEqual(Scalar.ONE, R2);
     }
 
     [TestMethod]
@@ -56,13 +56,13 @@ public class UT_Scalar
         {
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0
-        }, Scalar.Zero.ToArray());
+        }, Scalar.ZERO.ToArray());
 
         CollectionAssert.AreEqual(new byte[]
         {
             1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0
-        }, Scalar.One.ToArray());
+        }, Scalar.ONE.ToArray());
 
         CollectionAssert.AreEqual(new byte[]
         {
@@ -74,19 +74,19 @@ public class UT_Scalar
         {
             0, 0, 0, 0, 255, 255, 255, 255, 254, 91, 254, 255, 2, 164, 189, 83, 5, 216, 161, 9, 8,
             216, 57, 51, 72, 125, 157, 41, 83, 167, 237, 115
-        }, (-Scalar.One).ToArray());
+        }, (-Scalar.ONE).ToArray());
     }
 
     [TestMethod]
     public void TestFromBytes()
     {
-        Assert.AreEqual(Scalar.Zero, Scalar.FromBytes(new byte[]
+        Assert.AreEqual(Scalar.ZERO, Scalar.FromBytes(new byte[]
         {
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0
         }));
 
-        Assert.AreEqual(Scalar.One, Scalar.FromBytes(new byte[]
+        Assert.AreEqual(Scalar.ONE, Scalar.FromBytes(new byte[]
         {
             1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0
@@ -144,7 +144,7 @@ public class UT_Scalar
     [TestMethod]
     public void TestFromBytesWideNegativeOne()
     {
-        Assert.AreEqual(-Scalar.One, Scalar.FromBytesWide(new byte[]
+        Assert.AreEqual(-Scalar.ONE, Scalar.FromBytesWide(new byte[]
         {
             0, 0, 0, 0, 255, 255, 255, 255, 254, 91, 254, 255, 2, 164, 189, 83, 5, 216, 161, 9, 8,
             216, 57, 51, 72, 125, 157, 41, 83, 167, 237, 115, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -167,10 +167,10 @@ public class UT_Scalar
     [TestMethod]
     public void TestZero()
     {
-        Assert.AreEqual(Scalar.Zero, -Scalar.Zero);
-        Assert.AreEqual(Scalar.Zero, Scalar.Zero + Scalar.Zero);
-        Assert.AreEqual(Scalar.Zero, Scalar.Zero - Scalar.Zero);
-        Assert.AreEqual(Scalar.Zero, Scalar.Zero * Scalar.Zero);
+        Assert.AreEqual(Scalar.ZERO, -Scalar.ZERO);
+        Assert.AreEqual(Scalar.ZERO, Scalar.ZERO + Scalar.ZERO);
+        Assert.AreEqual(Scalar.ZERO, Scalar.ZERO - Scalar.ZERO);
+        Assert.AreEqual(Scalar.ZERO, Scalar.ZERO * Scalar.ZERO);
     }
 
     [TestMethod]
@@ -190,7 +190,7 @@ public class UT_Scalar
         tmp = LARGEST;
         tmp += new Scalar(new ulong[] { 1, 0, 0, 0 });
 
-        Assert.AreEqual(Scalar.Zero, tmp);
+        Assert.AreEqual(Scalar.ZERO, tmp);
     }
 
     [TestMethod]
@@ -200,8 +200,8 @@ public class UT_Scalar
 
         Assert.AreEqual(new Scalar(new ulong[] { 1, 0, 0, 0 }), tmp);
 
-        tmp = -Scalar.Zero;
-        Assert.AreEqual(Scalar.Zero, tmp);
+        tmp = -Scalar.ZERO;
+        Assert.AreEqual(Scalar.ZERO, tmp);
         tmp = -new Scalar(new ulong[] { 1, 0, 0, 0 });
         Assert.AreEqual(LARGEST, tmp);
     }
@@ -212,9 +212,9 @@ public class UT_Scalar
         var tmp = LARGEST;
         tmp -= LARGEST;
 
-        Assert.AreEqual(Scalar.Zero, tmp);
+        Assert.AreEqual(Scalar.ZERO, tmp);
 
-        tmp = Scalar.Zero;
+        tmp = Scalar.ZERO;
         tmp -= LARGEST;
 
         var tmp2 = MODULUS;
@@ -233,7 +233,7 @@ public class UT_Scalar
             var tmp = cur;
             tmp *= cur;
 
-            var tmp2 = Scalar.Zero;
+            var tmp2 = Scalar.ZERO;
             foreach (bool b in cur
                 .ToArray()
                 .SelectMany(p => Enumerable.Range(0, 8).Select(q => ((p >> q) & 1) == 1))
@@ -264,7 +264,7 @@ public class UT_Scalar
             var tmp = cur;
             tmp = tmp.Square();
 
-            var tmp2 = Scalar.Zero;
+            var tmp2 = Scalar.ZERO;
             foreach (bool b in cur
                 .ToArray()
                 .SelectMany(p => Enumerable.Range(0, 8).Select(q => ((p >> q) & 1) == 1))
@@ -288,9 +288,9 @@ public class UT_Scalar
     [TestMethod]
     public void TestInversion()
     {
-        Assert.ThrowsException<DivideByZeroException>(() => Scalar.Zero.Invert());
-        Assert.AreEqual(Scalar.One, Scalar.One.Invert());
-        Assert.AreEqual(-Scalar.One, (-Scalar.One).Invert());
+        Assert.ThrowsException<DivideByZeroException>(() => Scalar.ZERO.Invert());
+        Assert.AreEqual(Scalar.ONE, Scalar.ONE.Invert());
+        Assert.AreEqual(-Scalar.ONE, (-Scalar.ONE).Invert());
 
         var tmp = R2;
 
@@ -299,7 +299,7 @@ public class UT_Scalar
             var tmp2 = tmp.Invert();
             tmp2 *= tmp;
 
-            Assert.AreEqual(Scalar.One, tmp2);
+            Assert.AreEqual(Scalar.ONE, tmp2);
 
             tmp += R2;
         }
@@ -338,7 +338,7 @@ public class UT_Scalar
     [TestMethod]
     public void TestSqrt()
     {
-        Assert.AreEqual(Scalar.Zero.Sqrt(), Scalar.Zero);
+        Assert.AreEqual(Scalar.ZERO.Sqrt(), Scalar.ZERO);
 
         var square = new Scalar(new ulong[]
         {
@@ -362,7 +362,7 @@ public class UT_Scalar
             {
                 none_count++;
             }
-            square -= Scalar.One;
+            square -= Scalar.ONE;
         }
 
         Assert.AreEqual(49, none_count);
@@ -379,7 +379,7 @@ public class UT_Scalar
             0x1824_b159_acc5_056f
         }), Scalar.FromRaw(Enumerable.Repeat(0xffff_ffff_ffff_ffff, 4).ToArray()));
 
-        Assert.AreEqual(Scalar.Zero, Scalar.FromRaw(MODULUS_LIMBS_64));
+        Assert.AreEqual(Scalar.ZERO, Scalar.FromRaw(MODULUS_LIMBS_64));
 
         Assert.AreEqual(R, Scalar.FromRaw(new ulong[] { 1, 0, 0, 0 }));
     }

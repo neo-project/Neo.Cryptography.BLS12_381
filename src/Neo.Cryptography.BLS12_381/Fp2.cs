@@ -15,17 +15,17 @@ public readonly struct Fp2 : IEquatable<Fp2>, INumber<Fp2>
 
     public const int Size = Fp.Size * 2;
 
-    private static readonly Fp2 _zero = new();
-    private static readonly Fp2 _one = new(in Fp.One);
+    public static readonly Fp2 ZERO = new();
+    public static readonly Fp2 ONE = new(in Fp.ONE);
 
     static int INumber<Fp2>.Size => Size;
-    public static ref readonly Fp2 Zero => ref _zero;
-    public static ref readonly Fp2 One => ref _one;
+    public ref readonly Fp2 Zero => ref ZERO;
+    public ref readonly Fp2 One => ref ONE;
 
     public bool IsZero => C0.IsZero & C1.IsZero;
 
     public Fp2(in Fp f)
-        : this(in f, in Fp.Zero)
+        : this(in f, in Fp.ZERO)
     {
     }
 

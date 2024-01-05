@@ -10,7 +10,7 @@ public readonly struct G1Affine : IEquatable<G1Affine>
     public readonly Fp Y;
     public readonly bool Infinity;
 
-    public static readonly G1Affine Identity = new(in Fp.Zero, in Fp.One, true);
+    public static readonly G1Affine Identity = new(in Fp.ZERO, in Fp.ONE, true);
     public static readonly G1Affine Generator = new(in GeneratorX, in GeneratorY, false);
 
     public bool IsIdentity => Infinity;
@@ -33,7 +33,7 @@ public readonly struct G1Affine : IEquatable<G1Affine>
     {
         bool s = p.Z.TryInvert(out Fp zinv);
 
-        zinv = ConditionalSelect(in Fp.Zero, in zinv, s);
+        zinv = ConditionalSelect(in Fp.ZERO, in zinv, s);
         Fp x = p.X * zinv;
         Fp y = p.Y * zinv;
 
@@ -119,12 +119,12 @@ public readonly struct G1Affine : IEquatable<G1Affine>
 
     public static G1Affine operator -(in G1Affine p)
     {
-        return new G1Affine(in p.X, ConditionalSelect(-p.Y, in Fp.One, p.Infinity), p.Infinity);
+        return new G1Affine(in p.X, ConditionalSelect(-p.Y, in Fp.ONE, p.Infinity), p.Infinity);
     }
 
     public byte[] ToCompressed()
     {
-        byte[] res = ConditionalSelect(in X, in Fp.Zero, Infinity).ToArray();
+        byte[] res = ConditionalSelect(in X, in Fp.ZERO, Infinity).ToArray();
 
         // This point is in compressed form, so we set the most significant bit.
         res[0] |= 0x80;
@@ -144,8 +144,8 @@ public readonly struct G1Affine : IEquatable<G1Affine>
     {
         byte[] res = GC.AllocateUninitializedArray<byte>(96);
 
-        ConditionalSelect(in X, in Fp.Zero, Infinity).TryWrite(res.AsSpan(0..48));
-        ConditionalSelect(in Y, in Fp.Zero, Infinity).TryWrite(res.AsSpan(48..96));
+        ConditionalSelect(in X, in Fp.ZERO, Infinity).TryWrite(res.AsSpan(0..48));
+        ConditionalSelect(in Y, in Fp.ZERO, Infinity).TryWrite(res.AsSpan(48..96));
 
         // Is this point at infinity? If so, set the second-most significant bit.
         res[0] |= ConditionalSelect((byte)0, (byte)0x40, Infinity);
