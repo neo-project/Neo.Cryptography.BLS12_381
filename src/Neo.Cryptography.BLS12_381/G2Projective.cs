@@ -8,14 +8,14 @@ using static Neo.Cryptography.BLS12_381.G2Constants;
 
 namespace Neo.Cryptography.BLS12_381;
 
-[StructLayout(LayoutKind.Explicit, Size = Fp2.SIZE * 3)]
+[StructLayout(LayoutKind.Explicit, Size = Fp2.Size * 3)]
 public readonly struct G2Projective : IEquatable<G2Projective>
 {
     [FieldOffset(0)]
     public readonly Fp2 X;
-    [FieldOffset(Fp2.SIZE)]
+    [FieldOffset(Fp2.Size)]
     public readonly Fp2 Y;
-    [FieldOffset(Fp2.SIZE * 2)]
+    [FieldOffset(Fp2.Size * 2)]
     public readonly Fp2 Z;
 
     public static readonly G2Projective Identity = new(in Fp2.Zero, in Fp2.One, in Fp2.Zero);

@@ -5,20 +5,19 @@ using static Neo.Cryptography.BLS12_381.ConstantTimeUtility;
 
 namespace Neo.Cryptography.BLS12_381;
 
-[StructLayout(LayoutKind.Explicit, Size = SIZE)]
+[StructLayout(LayoutKind.Explicit, Size = Size)]
 public readonly struct Fp2 : IEquatable<Fp2>, INumber<Fp2>
 {
     [FieldOffset(0)]
     public readonly Fp C0;
-    [FieldOffset(Fp.SIZE)]
+    [FieldOffset(Fp.Size)]
     public readonly Fp C1;
 
-    public const int SIZE = Fp.SIZE * 2;
+    public const int Size = Fp.Size * 2;
 
     private static readonly Fp2 _zero = new();
     private static readonly Fp2 _one = new(in Fp.One);
 
-    public int Size => SIZE;
     public static ref readonly Fp2 Zero => ref _zero;
     public static ref readonly Fp2 One => ref _one;
 
@@ -37,10 +36,10 @@ public readonly struct Fp2 : IEquatable<Fp2>, INumber<Fp2>
 
     public static Fp2 FromBytes(ReadOnlySpan<byte> data)
     {
-        if (data.Length != SIZE)
-            throw new FormatException($"The argument `{nameof(data)}` should contain {SIZE} bytes.");
-        Fp c0 = Fp.FromBytes(data[Fp.SIZE..]);
-        Fp c1 = Fp.FromBytes(data[..Fp.SIZE]);
+        if (data.Length != Size)
+            throw new FormatException($"The argument `{nameof(data)}` should contain {Size} bytes.");
+        Fp c0 = Fp.FromBytes(data[Fp.Size..]);
+        Fp c1 = Fp.FromBytes(data[..Fp.Size]);
         return new(in c0, in c1);
     }
 
@@ -85,8 +84,8 @@ public readonly struct Fp2 : IEquatable<Fp2>, INumber<Fp2>
     public bool TryWrite(Span<byte> buffer)
     {
         if (buffer.Length < Size) return false;
-        C0.TryWrite(buffer[Fp.SIZE..Size]);
-        C1.TryWrite(buffer[0..Fp.SIZE]);
+        C0.TryWrite(buffer[Fp.Size..Size]);
+        C1.TryWrite(buffer[0..Fp.Size]);
         return true;
     }
 

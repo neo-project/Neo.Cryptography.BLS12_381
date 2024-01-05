@@ -4,22 +4,21 @@ using System.Security.Cryptography;
 
 namespace Neo.Cryptography.BLS12_381;
 
-[StructLayout(LayoutKind.Explicit, Size = SIZE)]
+[StructLayout(LayoutKind.Explicit, Size = Size)]
 public readonly struct Fp6 : IEquatable<Fp6>, INumber<Fp6>
 {
     [FieldOffset(0)]
     public readonly Fp2 C0;
-    [FieldOffset(Fp2.SIZE)]
+    [FieldOffset(Fp2.Size)]
     public readonly Fp2 C1;
-    [FieldOffset(Fp2.SIZE * 2)]
+    [FieldOffset(Fp2.Size * 2)]
     public readonly Fp2 C2;
 
-    public const int SIZE = Fp2.SIZE * 3;
+    public const int Size = Fp2.Size * 3;
 
     private static readonly Fp6 _zero = new();
     private static readonly Fp6 _one = new(in Fp2.One);
 
-    public int Size => SIZE;
     public static ref readonly Fp6 Zero => ref _zero;
     public static ref readonly Fp6 One => ref _one;
 
@@ -44,11 +43,11 @@ public readonly struct Fp6 : IEquatable<Fp6>, INumber<Fp6>
 
     public static Fp6 FromBytes(ReadOnlySpan<byte> data)
     {
-        if (data.Length != SIZE)
-            throw new FormatException($"The argument `{nameof(data)}` should contain {SIZE} bytes.");
-        Fp2 c0 = Fp2.FromBytes(data[(Fp2.SIZE * 2)..]);
-        Fp2 c1 = Fp2.FromBytes(data[Fp2.SIZE..(Fp2.SIZE * 2)]);
-        Fp2 c2 = Fp2.FromBytes(data[..Fp2.SIZE]);
+        if (data.Length != Size)
+            throw new FormatException($"The argument `{nameof(data)}` should contain {Size} bytes.");
+        Fp2 c0 = Fp2.FromBytes(data[(Fp2.Size * 2)..]);
+        Fp2 c1 = Fp2.FromBytes(data[Fp2.Size..(Fp2.Size * 2)]);
+        Fp2 c2 = Fp2.FromBytes(data[..Fp2.Size]);
         return new(in c0, in c1, in c2);
     }
 
@@ -88,9 +87,9 @@ public readonly struct Fp6 : IEquatable<Fp6>, INumber<Fp6>
     public bool TryWrite(Span<byte> buffer)
     {
         if (buffer.Length < Size) return false;
-        C0.TryWrite(buffer[(Fp2.SIZE * 2)..Size]);
-        C1.TryWrite(buffer[Fp2.SIZE..(Fp2.SIZE * 2)]);
-        C2.TryWrite(buffer[0..Fp2.SIZE]);
+        C0.TryWrite(buffer[(Fp2.Size * 2)..Size]);
+        C1.TryWrite(buffer[Fp2.Size..(Fp2.Size * 2)]);
+        C2.TryWrite(buffer[0..Fp2.Size]);
         return true;
     }
 

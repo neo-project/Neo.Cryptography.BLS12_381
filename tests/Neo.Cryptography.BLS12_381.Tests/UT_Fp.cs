@@ -10,7 +10,7 @@ public class UT_Fp
     [TestMethod]
     public void TestSize()
     {
-        Assert.AreEqual(Fp.SIZE, Marshal.SizeOf<Fp>());
+        Assert.AreEqual(Fp.Size, Marshal.SizeOf<Fp>());
     }
 
     [TestMethod]
