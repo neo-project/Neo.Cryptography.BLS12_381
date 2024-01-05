@@ -2,6 +2,7 @@ namespace Neo.Cryptography.BLS12_381;
 
 interface INumber<T> where T : unmanaged, INumber<T>
 {
+    abstract int Size { get; }
     static abstract ref readonly T Zero { get; }
     static abstract ref readonly T One { get; }
 

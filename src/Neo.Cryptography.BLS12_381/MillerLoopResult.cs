@@ -3,7 +3,7 @@ using static Neo.Cryptography.BLS12_381.Constants;
 
 namespace Neo.Cryptography.BLS12_381;
 
-[StructLayout(LayoutKind.Explicit, Size = Fp12.Size)]
+[StructLayout(LayoutKind.Explicit, Size = Fp12.SIZE)]
 readonly struct MillerLoopResult
 {
     [FieldOffset(0)]
