@@ -9,13 +9,14 @@ using static Neo.Cryptography.BLS12_381.ScalarConstants;
 
 namespace Neo.Cryptography.BLS12_381;
 
-[StructLayout(LayoutKind.Explicit, Size = Size)]
+[StructLayout(LayoutKind.Explicit, Size = SIZE)]
 public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
 {
-    public const int Size = 32;
-    public const int SizeL = Size / sizeof(ulong);
+    public const int SIZE = 32;
+    public const int LSIZE = SIZE / sizeof(ulong);
     public static readonly Scalar Default = new();
 
+    public int Size => SIZE;
     public static ref readonly Scalar Zero => ref Default;
     public static ref readonly Scalar One => ref R;
 
@@ -31,7 +32,7 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
 
     public Scalar(ulong value)
     {
-        Span<ulong> data = stackalloc ulong[SizeL];
+        Span<ulong> data = stackalloc ulong[LSIZE];
         data[0] = value;
         this = FromRaw(data);
     }
@@ -45,8 +46,8 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
 
     public static Scalar FromBytes(ReadOnlySpan<byte> data)
     {
-        if (data.Length != Size)
-            throw new FormatException($"The argument `{nameof(data)}` should contain {Size} bytes.");
+        if (data.Length != SIZE)
+            throw new FormatException($"The argument `{nameof(data)}` should contain {SIZE} bytes.");
 
         ref readonly Scalar ref_ = ref MemoryMarshal.AsRef<Scalar>(data);
 
@@ -75,8 +76,8 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
 
     public static Scalar FromBytesWide(ReadOnlySpan<byte> data)
     {
-        if (data.Length != Size * 2)
-            throw new FormatException($"The argument `{nameof(data)}` should contain {Size * 2} bytes.");
+        if (data.Length != SIZE * 2)
+            throw new FormatException($"The argument `{nameof(data)}` should contain {SIZE * 2} bytes.");
 
         ReadOnlySpan<Scalar> d = MemoryMarshal.Cast<byte, Scalar>(data);
         return d[0] * R2 + d[1] * R3;
@@ -238,8 +239,8 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
 
     public Scalar Pow(ulong[] by)
     {
-        if (by.Length != SizeL)
-            throw new ArgumentException($"The length of the parameter `{nameof(by)}` must be {SizeL}.");
+        if (by.Length != LSIZE)
+            throw new ArgumentException($"The length of the parameter `{nameof(by)}` must be {LSIZE}.");
 
         var res = One;
         for (int j = by.Length - 1; j >= 0; j--)
