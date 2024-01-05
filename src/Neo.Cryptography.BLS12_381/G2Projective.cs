@@ -79,7 +79,7 @@ public readonly struct G2Projective : IEquatable<G2Projective>
 
     public static G2Projective operator -(in G2Projective a)
     {
-        return new(in a.X, -a.Y, in a.Z);
+        return new(in a.X, a.Y.Negate(), in a.Z);
     }
 
     public static G2Projective operator +(in G2Projective a, in G2Projective b)
@@ -176,7 +176,7 @@ public readonly struct G2Projective : IEquatable<G2Projective>
 
     public static G2Projective operator -(in G2Projective a, in G2Affine b)
     {
-        return a + -b;
+        return a + b.Negate();
     }
 
     public static G2Projective operator *(in G2Projective a, in Scalar b)
@@ -257,7 +257,7 @@ public readonly struct G2Projective : IEquatable<G2Projective>
             // x = frobenius^2(x)/2^((p-1)/3); note that q^2 is the order of the field.
             X * Psi2CoeffX,
             // y = -frobenius^2(y); note that q^2 is the order of the field.
-            -Y,
+            Y.Negate(),
             // z = z
             in Z
         );
@@ -352,7 +352,7 @@ public readonly struct G2Projective : IEquatable<G2Projective>
             G2Affine p;
             try
             {
-                p = new G2Affine(in x, flip_sign ? -y : y);
+                p = new G2Affine(in x, flip_sign ? y.Negate() : y);
             }
             catch
             {

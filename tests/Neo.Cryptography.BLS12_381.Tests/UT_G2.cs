@@ -86,13 +86,13 @@ public class UT_G2
         Assert.AreEqual(a, c);
         Assert.AreNotEqual(b, c);
 
-        c = new(in c.X, -c.Y, in c.Z);
+        c = new(in c.X, c.Y.Negate(), in c.Z);
         Assert.IsTrue(c.IsOnCurve);
 
         Assert.AreNotEqual(a, c);
         Assert.AreNotEqual(b, c);
 
-        c = new(in z, -c.Y, in c.Z);
+        c = new(in z, c.Y.Negate(), in c.Z);
         Assert.IsFalse(c.IsOnCurve);
         Assert.AreNotEqual(a, b);
         Assert.AreNotEqual(a, c);
@@ -312,7 +312,7 @@ public class UT_G2
             }), Fp.Zero);
             beta = beta.Square();
             var a = G2Projective.Generator.Double().Double();
-            var b = new G2Projective(a.X * beta, -a.Y, in a.Z);
+            var b = new G2Projective(a.X * beta, a.Y.Negate(), in a.Z);
             Assert.IsTrue(a.IsOnCurve);
             Assert.IsTrue(b.IsOnCurve);
 
@@ -455,7 +455,7 @@ public class UT_G2
             }), Fp.Zero);
             beta = beta.Square();
             var _a = G2Projective.Generator.Double().Double();
-            var b = new G2Projective(_a.X * beta, -_a.Y, in _a.Z);
+            var b = new G2Projective(_a.X * beta, _a.Y.Negate(), in _a.Z);
             var a = new G2Affine(_a);
             Assert.IsTrue((a.IsOnCurve));
             Assert.IsTrue((b.IsOnCurve));
@@ -511,8 +511,8 @@ public class UT_G2
     public void TestAffineNegationAndSubtraction()
     {
         var a = G2Affine.Generator;
-        Assert.AreEqual(G2Projective.Identity, new G2Projective(a) + (-a));
-        Assert.AreEqual(new G2Projective(a) - a, new G2Projective(a) + (-a));
+        Assert.AreEqual(G2Projective.Identity, new G2Projective(a) + a.Negate());
+        Assert.AreEqual(new G2Projective(a) - a, new G2Projective(a) + a.Negate());
     }
 
     [TestMethod]
@@ -610,7 +610,7 @@ public class UT_G2
         // multiplying by `x` a point in G2 is the same as multiplying by
         // the equivalent scalar.
         var generator = G2Projective.Generator;
-        var x = BLS_X_IS_NEGATIVE ? -new Scalar(BLS_X) : new Scalar(BLS_X);
+        var x = BLS_X_IS_NEGATIVE ? new Scalar(BLS_X).Negate() : new Scalar(BLS_X);
         Assert.AreEqual(generator * x, generator.MulByX());
 
         var point = G2Projective.Generator * new Scalar(42);

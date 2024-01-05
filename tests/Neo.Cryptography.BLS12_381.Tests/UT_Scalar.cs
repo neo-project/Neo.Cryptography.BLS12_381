@@ -74,7 +74,7 @@ public class UT_Scalar
         {
             0, 0, 0, 0, 255, 255, 255, 255, 254, 91, 254, 255, 2, 164, 189, 83, 5, 216, 161, 9, 8,
             216, 57, 51, 72, 125, 157, 41, 83, 167, 237, 115
-        }, (-Scalar.One).ToArray());
+        }, Scalar.One.Negate().ToArray());
     }
 
     [TestMethod]
@@ -144,7 +144,7 @@ public class UT_Scalar
     [TestMethod]
     public void TestFromBytesWideNegativeOne()
     {
-        Assert.AreEqual(-Scalar.One, Scalar.FromBytesWide(new byte[]
+        Assert.AreEqual(Scalar.One.Negate(), Scalar.FromBytesWide(new byte[]
         {
             0, 0, 0, 0, 255, 255, 255, 255, 254, 91, 254, 255, 2, 164, 189, 83, 5, 216, 161, 9, 8,
             216, 57, 51, 72, 125, 157, 41, 83, 167, 237, 115, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -167,7 +167,7 @@ public class UT_Scalar
     [TestMethod]
     public void TestZero()
     {
-        Assert.AreEqual(Scalar.Zero, -Scalar.Zero);
+        Assert.AreEqual(Scalar.Zero, Scalar.Zero.Negate());
         Assert.AreEqual(Scalar.Zero, Scalar.Zero + Scalar.Zero);
         Assert.AreEqual(Scalar.Zero, Scalar.Zero - Scalar.Zero);
         Assert.AreEqual(Scalar.Zero, Scalar.Zero * Scalar.Zero);
@@ -196,13 +196,13 @@ public class UT_Scalar
     [TestMethod]
     public void TestNegation()
     {
-        var tmp = -LARGEST;
+        var tmp = LARGEST.Negate();
 
         Assert.AreEqual(new Scalar(new ulong[] { 1, 0, 0, 0 }), tmp);
 
-        tmp = -Scalar.Zero;
+        tmp = Scalar.Zero.Negate();
         Assert.AreEqual(Scalar.Zero, tmp);
-        tmp = -new Scalar(new ulong[] { 1, 0, 0, 0 });
+        tmp = new Scalar(new ulong[] { 1, 0, 0, 0 }).Negate();
         Assert.AreEqual(LARGEST, tmp);
     }
 
@@ -290,7 +290,7 @@ public class UT_Scalar
     {
         Assert.ThrowsException<DivideByZeroException>(() => Scalar.Zero.Invert());
         Assert.AreEqual(Scalar.One, Scalar.One.Invert());
-        Assert.AreEqual(-Scalar.One, (-Scalar.One).Invert());
+        Assert.AreEqual(Scalar.One.Negate(), (Scalar.One.Negate()).Invert());
 
         var tmp = R2;
 

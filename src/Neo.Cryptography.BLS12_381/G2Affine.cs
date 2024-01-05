@@ -83,12 +83,12 @@ public readonly struct G2Affine : IEquatable<G2Affine>
         return X.GetHashCode() ^ Y.GetHashCode();
     }
 
-    public static G2Affine operator -(in G2Affine a)
+    public G2Affine Negate()
     {
         return new G2Affine(
-            in a.X,
-            ConditionalSelect(-a.Y, in Fp2.One, a.Infinity),
-            a.Infinity
+            in X,
+            ConditionalSelect(Y.Negate(), in Fp2.One, Infinity),
+            Infinity
         );
     }
 
@@ -168,7 +168,7 @@ public readonly struct G2Affine : IEquatable<G2Affine>
         {
             // Recover a y-coordinate given x by y = sqrt(x^3 + 4)
             var y = ((x.Square() * x) + B).Sqrt();
-            y = ConditionalSelect(in y, -y, y.LexicographicallyLargest() ^ sort_flag_set);
+            y = ConditionalSelect(in y, y.Negate(), y.LexicographicallyLargest() ^ sort_flag_set);
             G2Affine result = new(in x, in y, infinity_flag_set);
             result = ConditionalSelect(in result, in Identity, infinity_flag_set);
             if (check)

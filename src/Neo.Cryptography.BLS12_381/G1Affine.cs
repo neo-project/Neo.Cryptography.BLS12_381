@@ -62,7 +62,7 @@ public readonly struct G1Affine : IEquatable<G1Affine>
         if (compressed)
         {
             Fp y = ((x.Square() * x) + B).Sqrt();
-            y = ConditionalSelect(in y, -y, y.LexicographicallyLargest() ^ sort_flag_set);
+            y = ConditionalSelect(in y, y.Negate(), y.LexicographicallyLargest() ^ sort_flag_set);
             G1Affine result = new(in x, in y, infinity_flag_set);
             result = ConditionalSelect(in result, in Identity, infinity_flag_set);
             if (check)
@@ -119,7 +119,7 @@ public readonly struct G1Affine : IEquatable<G1Affine>
 
     public static G1Affine operator -(in G1Affine p)
     {
-        return new G1Affine(in p.X, ConditionalSelect(-p.Y, in Fp.One, p.Infinity), p.Infinity);
+        return new G1Affine(in p.X, ConditionalSelect(p.Y.Negate(), in Fp.One, p.Infinity), p.Infinity);
     }
 
     public byte[] ToCompressed()

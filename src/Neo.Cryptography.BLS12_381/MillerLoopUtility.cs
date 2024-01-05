@@ -62,7 +62,7 @@ static class MillerLoopUtility
         r = new(in x, in y, in z);
         tmp3 = tmp4 * zsquared;
         tmp3 += tmp3;
-        tmp3 = -tmp3;
+        tmp3 = tmp3.Negate();
         tmp6 = tmp6.Square() - tmp0 - tmp5;
         tmp1 += tmp1;
         tmp1 += tmp1;
@@ -101,7 +101,7 @@ static class MillerLoopUtility
         t10 -= ztsquared;
         t9 = t9 + t9 - t10;
         t10 = r.Z + r.Z;
-        t6 = -t6;
+        t6 = t6.Negate();
         t1 = t6 + t6;
 
         return (t10, t1, t9);

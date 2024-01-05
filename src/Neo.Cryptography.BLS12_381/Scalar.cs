@@ -464,9 +464,9 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
         return MemoryMarshal.Cast<ulong, Scalar>(tmp)[0] - MODULUS;
     }
 
-    public static Scalar operator -(in Scalar a)
+    public Scalar Negate()
     {
-        ReadOnlySpan<ulong> self = a.GetSpanU64();
+        ReadOnlySpan<ulong> self = GetSpanU64();
         ulong d0, d1, d2, d3;
         ulong borrow;
 
@@ -480,7 +480,7 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
 
         // `tmp` could be `MODULUS` if `self` was zero. Create a mask that is
         // zero if `self` was zero, and `u64::max_value()` if self was nonzero.
-        ulong mask = a.IsZero ? ulong.MinValue : ulong.MaxValue;
+        ulong mask = IsZero ? ulong.MinValue : ulong.MaxValue;
 
         ReadOnlySpan<ulong> tmp = stackalloc[] { d0 & mask, d1 & mask, d2 & mask, d3 & mask };
         return MemoryMarshal.Cast<ulong, Scalar>(tmp)[0];

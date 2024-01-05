@@ -116,7 +116,7 @@ public readonly struct Fp12 : IEquatable<Fp12>, INumber<Fp12>
 
     public Fp12 Conjugate()
     {
-        return new Fp12(in C0, -C1);
+        return new Fp12(in C0, C1.Negate());
     }
 
     public Fp12 FrobeniusMap()
@@ -164,12 +164,12 @@ public readonly struct Fp12 : IEquatable<Fp12>, INumber<Fp12>
     public Fp12 Invert()
     {
         Fp6 t = (C0.Square() - C1.Square().MulByNonresidue()).Invert();
-        return new Fp12(C0 * t, C1 * -t);
+        return new Fp12(C0 * t, C1 * t.Negate());
     }
 
-    public static Fp12 operator -(in Fp12 a)
+    public Fp12 Negate()
     {
-        return new Fp12(-a.C0, -a.C1);
+        return new Fp12(C0.Negate(), C1.Negate());
     }
 
     public static Fp12 operator +(in Fp12 a, in Fp12 b)

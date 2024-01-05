@@ -99,7 +99,7 @@ public readonly struct Fp2 : IEquatable<Fp2>, INumber<Fp2>
 
     public Fp2 Conjugate()
     {
-        return new(in C0, -C1);
+        return new(in C0, C1.Negate());
     }
 
     public Fp2 MulByNonresidue()
@@ -159,7 +159,7 @@ public readonly struct Fp2 : IEquatable<Fp2>, INumber<Fp2>
         // Each of these is a "sum of products", which we can compute efficiently.
 
         return new(
-            Fp.SumOfProducts(stackalloc[] { a.C0, -a.C1 }, stackalloc[] { b.C0, b.C1 }),
+            Fp.SumOfProducts(stackalloc[] { a.C0, a.C1.Negate() }, stackalloc[] { b.C0, b.C1 }),
             Fp.SumOfProducts(stackalloc[] { a.C0, a.C1 }, stackalloc[] { b.C1, b.C0 })
         );
     }
@@ -174,9 +174,9 @@ public readonly struct Fp2 : IEquatable<Fp2>, INumber<Fp2>
         return new(a.C0 - b.C0, a.C1 - b.C1);
     }
 
-    public static Fp2 operator -(in Fp2 a)
+    public Fp2 Negate()
     {
-        return new(-a.C0, -a.C1);
+        return new(C0.Negate(), C1.Negate());
     }
 
     public Fp2 Sqrt()
@@ -215,7 +215,7 @@ public readonly struct Fp2 : IEquatable<Fp2>, INumber<Fp2>
         // we're just trying to get the square of an element of the subfield
         // Fp. This is given by x0 * u, since u = sqrt(-1). Since the element
         // x0 = a + bu has b = 0, the solution is therefore au.
-        sqrt = ConditionalSelect(in sqrt, new(-x0.C1, in x0.C0), alpha == -One);
+        sqrt = ConditionalSelect(in sqrt, new(x0.C1.Negate(), in x0.C0), alpha == One.Negate());
 
         sqrt = ConditionalSelect(in sqrt, in Zero, IsZero);
 
@@ -249,7 +249,7 @@ public readonly struct Fp2 : IEquatable<Fp2>, INumber<Fp2>
         // only a single inversion in Fp.
 
         bool s = (C0.Square() + C1.Square()).TryInvert(out Fp t);
-        result = new Fp2(C0 * t, C1 * -t);
+        result = new Fp2(C0 * t, C1 * t.Negate());
         return s;
     }
 }

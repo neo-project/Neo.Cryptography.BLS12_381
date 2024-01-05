@@ -202,9 +202,9 @@ public readonly struct Fp6 : IEquatable<Fp6>, INumber<Fp6>
         return new Fp6(t * c0, t * c1, t * c2);
     }
 
-    public static Fp6 operator -(in Fp6 a)
+    public Fp6 Negate()
     {
-        return new Fp6(-a.C0, -a.C1, -a.C2);
+        return new Fp6(C0.Negate(), C1.Negate(), C2.Negate());
     }
 
     public static Fp6 operator +(in Fp6 a, in Fp6 b)
@@ -261,7 +261,7 @@ public readonly struct Fp6 : IEquatable<Fp6>, INumber<Fp6>
 
         return new Fp6(new Fp2(
             Fp.SumOfProducts(
-                stackalloc[] { a.C0.C0, -a.C0.C1, a.C1.C0, -a.C1.C1, a.C2.C0, -a.C2.C1 },
+                stackalloc[] { a.C0.C0, a.C0.C1.Negate(), a.C1.C0, a.C1.C1.Negate(), a.C2.C0, a.C2.C1.Negate() },
                 stackalloc[] { b.C0.C0, b.C0.C1, b20_m_b21, b20_p_b21, b10_m_b11, b10_p_b11 }
             ),
             Fp.SumOfProducts(
@@ -269,7 +269,7 @@ public readonly struct Fp6 : IEquatable<Fp6>, INumber<Fp6>
                 stackalloc[] { b.C0.C1, b.C0.C0, b20_p_b21, b20_m_b21, b10_p_b11, b10_m_b11 }
             )), new Fp2(
             Fp.SumOfProducts(
-                stackalloc[] { a.C0.C0, -a.C0.C1, a.C1.C0, -a.C1.C1, a.C2.C0, -a.C2.C1 },
+                stackalloc[] { a.C0.C0, a.C0.C1.Negate(), a.C1.C0, a.C1.C1.Negate(), a.C2.C0, a.C2.C1.Negate() },
                 stackalloc[] { b.C1.C0, b.C1.C1, b.C0.C0, b.C0.C1, b20_m_b21, b20_p_b21 }
             ),
             Fp.SumOfProducts(
@@ -277,7 +277,7 @@ public readonly struct Fp6 : IEquatable<Fp6>, INumber<Fp6>
                 stackalloc[] { b.C1.C1, b.C1.C0, b.C0.C1, b.C0.C0, b20_p_b21, b20_m_b21 }
             )), new Fp2(
             Fp.SumOfProducts(
-                stackalloc[] { a.C0.C0, -a.C0.C1, a.C1.C0, -a.C1.C1, a.C2.C0, -a.C2.C1 },
+                stackalloc[] { a.C0.C0, a.C0.C1.Negate(), a.C1.C0, a.C1.C1.Negate(), a.C2.C0, a.C2.C1.Negate() },
                 stackalloc[] { b.C2.C0, b.C2.C1, b.C1.C0, b.C1.C1, b.C0.C0, b.C0.C1 }
             ),
             Fp.SumOfProducts(

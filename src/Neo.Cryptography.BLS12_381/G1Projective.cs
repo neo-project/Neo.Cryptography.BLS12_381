@@ -74,7 +74,7 @@ public readonly struct G1Projective : IEquatable<G1Projective>
 
     public static G1Projective operator -(in G1Projective p)
     {
-        return new G1Projective(in p.X, -p.Y, in p.Z);
+        return new G1Projective(in p.X, p.Y.Negate(), in p.Z);
     }
 
     private static Fp MulBy3B(in Fp a)

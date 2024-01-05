@@ -229,10 +229,10 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
         return result.SubtractP();
     }
 
-    public static Fp operator -(in Fp a)
+    public Fp Negate()
     {
         Fp result;
-        ReadOnlySpan<ulong> self = a.GetSpanU64();
+        ReadOnlySpan<ulong> self = GetSpanU64();
         Span<ulong> d = result.GetSpanU64();
 
         ulong borrow = 0;
@@ -243,7 +243,7 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
         (d[4], borrow) = Sbb(MODULUS[4], self[4], borrow);
         (d[5], _) = Sbb(MODULUS[5], self[5], borrow);
 
-        ulong mask = a.IsZero ? ulong.MinValue : ulong.MaxValue;
+        ulong mask = IsZero ? ulong.MinValue : ulong.MaxValue;
         d[0] &= mask;
         d[1] &= mask;
         d[2] &= mask;
@@ -256,7 +256,7 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
 
     public static Fp operator -(in Fp a, in Fp b)
     {
-        return -b + a;
+        return b.Negate() + a;
     }
 
     public static Fp SumOfProducts(ReadOnlySpan<Fp> a, ReadOnlySpan<Fp> b)

@@ -193,7 +193,7 @@ public class UT_Fp
             0x08a6_e795_afc5_283e
         });
 
-        Assert.AreEqual(b, -a);
+        Assert.AreEqual(b, a.Negate());
     }
 
     [TestMethod]
@@ -234,7 +234,7 @@ public class UT_Fp
             Assert.AreEqual(b, a);
         }
 
-        Assert.AreEqual(-Fp.One, Fp.FromBytes(new byte[]
+        Assert.AreEqual(Fp.One.Negate(), Fp.FromBytes(new byte[]
         {
             26, 1, 17, 234, 57, 127, 230, 154, 75, 27, 167, 182, 67, 75, 172, 215, 100, 119, 75,
             132, 243, 133, 18, 191, 103, 48, 210, 160, 246, 176, 246, 36, 30, 171, 255, 254, 177,
@@ -277,7 +277,7 @@ public class UT_Fp
         });
 
         // sqrt(4) = -2
-        Assert.AreEqual(b, -a.Sqrt());
+        Assert.AreEqual(b, a.Sqrt().Negate());
     }
 
     [TestMethod]

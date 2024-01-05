@@ -86,13 +86,13 @@ public class UT_G1
         Assert.AreEqual(a, c);
         Assert.AreNotEqual(b, c);
 
-        c = new(in c.X, -c.Y, in c.Z);
+        c = new(in c.X, c.Y.Negate(), in c.Z);
         Assert.IsTrue(c.IsOnCurve);
 
         Assert.AreNotEqual(a, c);
         Assert.AreNotEqual(b, c);
 
-        c = new(in z, -c.Y, in c.Z);
+        c = new(in z, c.Y.Negate(), in c.Z);
         Assert.IsFalse(c.IsOnCurve);
         Assert.AreNotEqual(a, b);
         Assert.AreNotEqual(a, c);
@@ -268,7 +268,7 @@ public class UT_G1
             });
             beta = beta.Square();
             var a = G1Projective.Generator.Double().Double();
-            var b = new G1Projective(a.X * beta, -a.Y, in a.Z);
+            var b = new G1Projective(a.X * beta, a.Y.Negate(), in a.Z);
             Assert.IsTrue(a.IsOnCurve);
             Assert.IsTrue(b.IsOnCurve);
 
@@ -373,7 +373,7 @@ public class UT_G1
             });
             beta = beta.Square();
             var a = G1Projective.Generator.Double().Double();
-            var b = new G1Projective(a.X * beta, -a.Y, in a.Z);
+            var b = new G1Projective(a.X * beta, a.Y.Negate(), in a.Z);
             var a2 = new G1Affine(a);
             Assert.IsTrue(a2.IsOnCurve);
             Assert.IsTrue(b.IsOnCurve);
@@ -495,7 +495,7 @@ public class UT_G1
         // multiplying by `x` a point in G1 is the same as multiplying by
         // the equivalent scalar.
         var generator = G1Projective.Generator;
-        var x = BLS_X_IS_NEGATIVE ? -new Scalar(BLS_X) : new Scalar(BLS_X);
+        var x = BLS_X_IS_NEGATIVE ? new Scalar(BLS_X).Negate() : new Scalar(BLS_X);
         Assert.AreEqual(generator.MulByX(), generator * x);
 
         var point = G1Projective.Generator * new Scalar(42);

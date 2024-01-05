@@ -6,7 +6,7 @@ interface INumber<T> where T : unmanaged, INumber<T>
     static abstract ref readonly T Zero { get; }
     static abstract ref readonly T One { get; }
 
-    static abstract T operator -(in T x);
+    abstract T Negate();
     static abstract T operator +(in T x, in T y);
     static abstract T operator -(in T x, in T y);
     static abstract T operator *(in T x, in T y);

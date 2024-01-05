@@ -40,7 +40,7 @@ public class UT_Pairings
         var g = G1Affine.Generator;
         var h = G2Affine.Generator;
         var p = -Bls12.Pairing(in g, in h);
-        var q = Bls12.Pairing(in g, -h);
+        var q = Bls12.Pairing(in g, h.Negate());
         var r = Bls12.Pairing(-g, in h);
 
         Assert.AreEqual(p, q);
