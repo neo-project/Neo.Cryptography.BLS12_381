@@ -17,7 +17,6 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
 
     private static readonly Fp _zero = new();
 
-    static int INumber<Fp>.Size => Size;
     public static ref readonly Fp Zero => ref _zero;
     public static ref readonly Fp One => ref R;
 
@@ -408,6 +407,8 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
 
         return MontgomeryReduce(t[0], t[1], t[2], t[3], t[4], t[5], t[6], t[7], t[8], t[9], t[10], t[11]);
     }
+
+    public Fp Pow(in Fp value) => this * value;
 
     public Fp Square()
     {

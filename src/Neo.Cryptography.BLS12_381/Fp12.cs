@@ -17,7 +17,6 @@ public readonly struct Fp12 : IEquatable<Fp12>, INumber<Fp12>
     private static readonly Fp12 _zero = new();
     private static readonly Fp12 _one = new(in Fp6.One);
 
-    static int INumber<Fp12>.Size => Size;
     public static ref readonly Fp12 Zero => ref _zero;
     public static ref readonly Fp12 One => ref _one;
 
@@ -196,4 +195,6 @@ public readonly struct Fp12 : IEquatable<Fp12>, INumber<Fp12>
 
         return new Fp12(in c0, in c1);
     }
+
+    public Fp12 Pow(in Fp12 value) => this * value;
 }

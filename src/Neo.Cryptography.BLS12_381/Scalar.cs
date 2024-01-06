@@ -16,7 +16,6 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
     public const int SizeL = Size / sizeof(ulong);
     public static readonly Scalar Default = new();
 
-    static int INumber<Scalar>.Size => Size;
     public static ref readonly Scalar Zero => ref Default;
     public static ref readonly Scalar One => ref R;
 
@@ -425,6 +424,8 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
 
         return MontgomeryReduce(r0, r1, r2, r3, r4, r5, r6, r7);
     }
+
+    public Scalar Pow(in Scalar value) => this * value;
 
     public static Scalar operator -(in Scalar a, in Scalar b)
     {

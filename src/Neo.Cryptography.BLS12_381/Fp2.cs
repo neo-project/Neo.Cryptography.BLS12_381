@@ -18,7 +18,6 @@ public readonly struct Fp2 : IEquatable<Fp2>, INumber<Fp2>
     private static readonly Fp2 _zero = new();
     private static readonly Fp2 _one = new(in Fp.One);
 
-    static int INumber<Fp2>.Size => Size;
     public static ref readonly Fp2 Zero => ref _zero;
     public static ref readonly Fp2 One => ref _one;
 
@@ -163,6 +162,8 @@ public readonly struct Fp2 : IEquatable<Fp2>, INumber<Fp2>
             Fp.SumOfProducts(stackalloc[] { a.C0, a.C1 }, stackalloc[] { b.C1, b.C0 })
         );
     }
+
+    public Fp2 Pow(in Fp2 value) => this * value;
 
     public static Fp2 operator +(in Fp2 a, in Fp2 b)
     {
