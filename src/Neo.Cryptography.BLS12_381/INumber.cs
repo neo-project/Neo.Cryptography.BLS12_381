@@ -11,6 +11,9 @@ interface INumber<T> where T : unmanaged, INumber<T>
     //static abstract T operator -(in T x, in T y);
     //static abstract T operator *(in T x, in T y);
 
+    T Negate();
+    T Sum(in T value);
+    T Subtract(in T value);
     T Pow(in T value);
 
     abstract T Square();

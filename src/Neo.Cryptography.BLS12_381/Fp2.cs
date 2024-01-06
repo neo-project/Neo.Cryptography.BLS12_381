@@ -163,8 +163,6 @@ public readonly struct Fp2 : IEquatable<Fp2>, INumber<Fp2>
         );
     }
 
-    public Fp2 Pow(in Fp2 value) => this * value;
-
     public static Fp2 operator +(in Fp2 a, in Fp2 b)
     {
         return new(a.C0 + b.C0, a.C1 + b.C1);
@@ -253,4 +251,13 @@ public readonly struct Fp2 : IEquatable<Fp2>, INumber<Fp2>
         result = new Fp2(C0 * t, C1 * -t);
         return s;
     }
+
+    #region Instance math methods
+
+    public Fp2 Negate() => -this;
+    public Fp2 Pow(in Fp2 value) => this * value;
+    public Fp2 Sum(in Fp2 value) => this + value;
+    public Fp2 Subtract(in Fp2 value) => this - value;
+
+    #endregion
 }

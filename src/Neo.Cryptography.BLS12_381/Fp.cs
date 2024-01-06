@@ -408,8 +408,6 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
         return MontgomeryReduce(t[0], t[1], t[2], t[3], t[4], t[5], t[6], t[7], t[8], t[9], t[10], t[11]);
     }
 
-    public Fp Pow(in Fp value) => this * value;
-
     public Fp Square()
     {
         ReadOnlySpan<ulong> self = GetSpanU64();
@@ -463,4 +461,13 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
 
         return MontgomeryReduce(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
     }
+
+    #region Instance math methods
+
+    public Fp Negate() => -this;
+    public Fp Pow(in Fp value) => this * value;
+    public Fp Sum(in Fp value) => this + value;
+    public Fp Subtract(in Fp value) => this - value;
+
+    #endregion
 }

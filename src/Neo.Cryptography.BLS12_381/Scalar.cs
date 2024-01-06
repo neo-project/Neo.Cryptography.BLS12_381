@@ -425,8 +425,6 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
         return MontgomeryReduce(r0, r1, r2, r3, r4, r5, r6, r7);
     }
 
-    public Scalar Pow(in Scalar value) => this * value;
-
     public static Scalar operator -(in Scalar a, in Scalar b)
     {
         ReadOnlySpan<ulong> self = a.GetSpanU64(), rhs = b.GetSpanU64();
@@ -486,4 +484,13 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
         ReadOnlySpan<ulong> tmp = stackalloc[] { d0 & mask, d1 & mask, d2 & mask, d3 & mask };
         return MemoryMarshal.Cast<ulong, Scalar>(tmp)[0];
     }
+
+    #region Instance math methods
+
+    public Scalar Negate() => -this;
+    public Scalar Pow(in Scalar value) => this * value;
+    public Scalar Sum(in Scalar value) => this + value;
+    public Scalar Subtract(in Scalar value) => this - value;
+
+    #endregion
 }

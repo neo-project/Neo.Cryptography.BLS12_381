@@ -196,5 +196,12 @@ public readonly struct Fp12 : IEquatable<Fp12>, INumber<Fp12>
         return new Fp12(in c0, in c1);
     }
 
+    #region Instance math methods
+
+    public Fp12 Negate() => -this;
     public Fp12 Pow(in Fp12 value) => this * value;
+    public Fp12 Sum(in Fp12 value) => this + value;
+    public Fp12 Subtract(in Fp12 value) => this - value;
+
+    #endregion
 }
