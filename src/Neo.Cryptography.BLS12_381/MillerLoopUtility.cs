@@ -6,7 +6,7 @@ static class MillerLoopUtility
 {
     public static T MillerLoop<T, D>(D driver) where D : IMillerLoopDriver<T>
     {
-        var f = D.One;
+        var f = driver.One;
 
         var found_one = false;
         foreach (var i in Enumerable.Range(0, 64).Reverse().Select(b => ((BLS_X >> 1 >> b) & 1) == 1))
@@ -22,13 +22,13 @@ static class MillerLoopUtility
             if (i)
                 f = driver.AdditionStep(f);
 
-            f = D.SquareOutput(f);
+            f = driver.Square(f);
         }
 
         f = driver.DoublingStep(f);
 
         if (BLS_X_IS_NEGATIVE)
-            f = D.Conjugate(f);
+            f = driver.Conjugate(f);
 
         return f;
     }
