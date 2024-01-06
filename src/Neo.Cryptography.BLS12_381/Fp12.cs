@@ -199,7 +199,7 @@ public readonly struct Fp12 : IEquatable<Fp12>, INumber<Fp12>
     #region Instance math methods
 
     public Fp12 Negate() => -this;
-    public Fp12 Pow(in Fp12 value) => this * value;
+    public Fp12 Multiply(in Fp12 value) => this * value;
     public Fp12 Sum(in Fp12 value) => this + value;
     public Fp12 Subtract(in Fp12 value) => this - value;
 

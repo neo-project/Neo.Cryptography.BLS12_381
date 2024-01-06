@@ -289,7 +289,7 @@ public readonly struct Fp6 : IEquatable<Fp6>, INumber<Fp6>
     #region Instance math methods
 
     public Fp6 Negate() => -this;
-    public Fp6 Pow(in Fp6 value) => this * value;
+    public Fp6 Multiply(in Fp6 value) => this * value;
     public Fp6 Sum(in Fp6 value) => this + value;
     public Fp6 Subtract(in Fp6 value) => this - value;
 

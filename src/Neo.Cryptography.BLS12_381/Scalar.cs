@@ -488,7 +488,7 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
     #region Instance math methods
 
     public Scalar Negate() => -this;
-    public Scalar Pow(in Scalar value) => this * value;
+    public Scalar Multiply(in Scalar value) => this * value;
     public Scalar Sum(in Scalar value) => this + value;
     public Scalar Subtract(in Scalar value) => this - value;
 

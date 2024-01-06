@@ -14,7 +14,7 @@ interface INumber<T> where T : unmanaged, INumber<T>
     T Negate();
     T Sum(in T value);
     T Subtract(in T value);
-    T Pow(in T value);
+    T Multiply(in T value);
 
     abstract T Square();
 }
@@ -33,7 +33,7 @@ static class NumberExtensions
                 res = res.Square();
                 if (((by[j] >> i) & 1) == 1)
                 {
-                    res = res.Pow(self);
+                    res = res.Multiply(self);
                 }
             }
         }
