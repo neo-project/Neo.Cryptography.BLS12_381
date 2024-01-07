@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+
 namespace Neo.Cryptography.BLS12_381;
 
 interface INumber<T> where T : unmanaged, INumber<T>
@@ -40,9 +42,18 @@ static class NumberExtensions
         return res;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Fp PowVartime(this Fp self, ulong[] by) => PowVartime(Fp.One, self, by);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Fp2 PowVartime(this Fp2 self, ulong[] by) => PowVartime(Fp2.One, self, by);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Fp6 PowVartime(this Fp6 self, ulong[] by) => PowVartime(Fp6.One, self, by);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Fp12 PowVartime(this Fp12 self, ulong[] by) => PowVartime(Fp12.One, self, by);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Scalar PowVartime(this Scalar self, ulong[] by) => PowVartime(Scalar.One, self, by);
 }
