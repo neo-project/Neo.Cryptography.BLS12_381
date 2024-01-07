@@ -63,6 +63,9 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
 
     internal static Fp FromRawUnchecked(ulong[] values)
     {
+        if (values.Length != SizeL)
+            throw new FormatException($"The argument `{nameof(values)}` should contain {SizeL} entries.");
+
         return MemoryMarshal.Cast<ulong, Fp>(values)[0];
     }
 

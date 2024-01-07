@@ -24,9 +24,12 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
 
     internal Scalar(ulong[] values)
     {
+        if (values.Length != SizeL)
+            throw new FormatException($"The argument `{nameof(values)}` should contain {SizeL} entries.");
+
         // This internal method is only used by the constants classes.
         // The data must be in the correct format.
-        // So, there is no need to do any checks.
+        // So, there is no need to do any additional checks.
         this = MemoryMarshal.AsRef<Scalar>(MemoryMarshal.Cast<ulong, byte>(values));
     }
 
@@ -85,6 +88,9 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
 
     public static Scalar FromRaw(ReadOnlySpan<ulong> data)
     {
+        if (data.Length != SizeL)
+            throw new FormatException($"The argument `{nameof(data)}` should contain {SizeL} entries.");
+
         ReadOnlySpan<Scalar> span = MemoryMarshal.Cast<ulong, Scalar>(data);
         return span[0] * R2;
     }
