@@ -40,18 +40,9 @@ static class NumberExtensions
         return res;
     }
 
-    public static Fp PowVartime(this Fp self, ulong[] by)
-    {
-        return PowVartime(Fp.One, self, by);
-    }
-
-    public static Fp2 PowVartime(this Fp2 self, ulong[] by)
-    {
-        return PowVartime(Fp2.One, self, by);
-    }
-
-    public static Scalar PowVartime(this Scalar self, ulong[] by)
-    {
-        return PowVartime(Scalar.One, self, by);
-    }
+    public static Fp PowVartime(this Fp self, ulong[] by) => PowVartime(Fp.One, self, by);
+    public static Fp2 PowVartime(this Fp2 self, ulong[] by) => PowVartime(Fp2.One, self, by);
+    public static Fp6 PowVartime(this Fp6 self, ulong[] by) => PowVartime(Fp6.One, self, by);
+    public static Fp12 PowVartime(this Fp12 self, ulong[] by) => PowVartime(Fp12.One, self, by);
+    public static Scalar PowVartime(this Scalar self, ulong[] by) => PowVartime(Scalar.One, self, by);
 }
