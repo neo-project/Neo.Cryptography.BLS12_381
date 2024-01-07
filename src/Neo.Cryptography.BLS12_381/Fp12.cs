@@ -47,7 +47,7 @@ public readonly struct Fp12 : IEquatable<Fp12>, INumber<Fp12>
     public static Fp12 FromBytes(ReadOnlySpan<byte> data)
     {
         if (data.Length != Size)
-            throw new FormatException($"The argument `{nameof(data)}` should contain {Size} bytes.");
+            throw new FormatException($"The argument `{nameof(data)}` must contain {Size} bytes.");
         Fp6 c0 = Fp6.FromBytes(data[Fp6.Size..]);
         Fp6 c1 = Fp6.FromBytes(data[..Fp6.Size]);
         return new(in c0, in c1);
