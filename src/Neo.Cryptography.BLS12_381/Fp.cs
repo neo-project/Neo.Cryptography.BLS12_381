@@ -26,7 +26,7 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
     public static Fp FromBytes(ReadOnlySpan<byte> data)
     {
         if (data.Length != Size)
-            throw new FormatException($"The argument `{nameof(data)}` should contain {Size} bytes.");
+            throw new FormatException($"The argument `{nameof(data)}` must contain {Size} bytes.");
 
         Span<ulong> tmp = stackalloc ulong[SizeL];
         BinaryPrimitives.TryReadUInt64BigEndian(data[0..8], out tmp[5]);
@@ -63,6 +63,9 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
 
     internal static Fp FromRawUnchecked(ulong[] values)
     {
+        if (values.Length != SizeL)
+            throw new FormatException($"The argument `{nameof(values)}` must contain {SizeL} entries.");
+
         return MemoryMarshal.Cast<ulong, Fp>(values)[0];
     }
 
