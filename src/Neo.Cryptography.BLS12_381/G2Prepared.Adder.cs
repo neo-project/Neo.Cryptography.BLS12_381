@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using static Neo.Cryptography.BLS12_381.MillerLoopUtility;
 
 namespace Neo.Cryptography.BLS12_381;
@@ -31,10 +32,32 @@ partial class G2Prepared
             return null;
         }
 
+        #region IMillerLoopDriver<T>
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static object? Square(in object? f) => null;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static object? Conjugate(in object? f) => null;
+
+        public static object? One
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => null;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         object? IMillerLoopDriver<object?>.Square(in object? f) => null;
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         object? IMillerLoopDriver<object?>.Conjugate(in object? f) => null;
 
-        object? IMillerLoopDriver<object?>.One => null;
+        object? IMillerLoopDriver<object?>.One
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => null;
+        }
+
+        #endregion
     }
 }
