@@ -23,9 +23,12 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
 
     internal Scalar(ulong[] values)
     {
+        if (values.Length != SizeL)
+            throw new FormatException($"The argument `{nameof(values)}` must contain {SizeL} entries.");
+
         // This internal method is only used by the constants classes.
         // The data must be in the correct format.
-        // So, there is no need to do any checks.
+        // So, there is no need to do any additional checks.
         this = MemoryMarshal.AsRef<Scalar>(MemoryMarshal.Cast<ulong, byte>(values));
     }
 
@@ -46,7 +49,7 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
     public static Scalar FromBytes(ReadOnlySpan<byte> data)
     {
         if (data.Length != Size)
-            throw new FormatException($"The argument `{nameof(data)}` should contain {Size} bytes.");
+            throw new FormatException($"The argument `{nameof(data)}` must contain {Size} bytes.");
 
         ref readonly Scalar ref_ = ref MemoryMarshal.AsRef<Scalar>(data);
 
@@ -76,7 +79,7 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
     public static Scalar FromBytesWide(ReadOnlySpan<byte> data)
     {
         if (data.Length != Size * 2)
-            throw new FormatException($"The argument `{nameof(data)}` should contain {Size * 2} bytes.");
+            throw new FormatException($"The argument `{nameof(data)}` must contain {Size * 2} bytes.");
 
         ReadOnlySpan<Scalar> d = MemoryMarshal.Cast<byte, Scalar>(data);
         return d[0] * R2 + d[1] * R3;
@@ -84,6 +87,9 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
 
     public static Scalar FromRaw(ReadOnlySpan<ulong> data)
     {
+        if (data.Length != SizeL)
+            throw new FormatException($"The argument `{nameof(data)}` must contain {SizeL} entries.");
+
         ReadOnlySpan<Scalar> span = MemoryMarshal.Cast<ulong, Scalar>(data);
         return span[0] * R2;
     }
