@@ -29,7 +29,7 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
         // This internal method is only used by the constants classes.
         // The data must be in the correct format.
         // So, there is no need to do any additional checks.
-        this = MemoryMarshal.AsRef<Scalar>(MemoryMarshal.Cast<ulong, byte>(values));
+        this = Unsafe.As<byte, Scalar>(ref MemoryMarshal.GetReference(MemoryMarshal.Cast<ulong, byte>(values)));
     }
 
     public Scalar(ulong value)
