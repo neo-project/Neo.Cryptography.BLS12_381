@@ -1,28 +1,9 @@
-using System.Reflection;
 using static Neo.Cryptography.BLS12_381.Constants;
 
 namespace Neo.Cryptography.BLS12_381;
 
 static class MillerLoopUtility
 {
-    public static T SquareOutput<T, D>(in T f) where D : IMillerLoopDriver<T>
-    {
-        MethodInfo methodInfo = typeof(D).GetMethod("SquareOutput", BindingFlags.Static | BindingFlags.Public);
-        return (T)methodInfo?.Invoke(null, new object[] { f! })!;
-    }
-
-    public static T Conjugate<T, D>(in T f) where D : IMillerLoopDriver<T>
-    {
-        MethodInfo methodInfo = typeof(D).GetMethod("Conjugate", BindingFlags.Static | BindingFlags.Public);
-        return (T)methodInfo?.Invoke(null, new object[] { f! })!;
-    }
-
-    public static T One<T, D>() where D : IMillerLoopDriver<T>
-    {
-        var methodInfo = typeof(D).GetMethod("get_One", BindingFlags.Static | BindingFlags.Public);
-        return (T)methodInfo?.Invoke(null, null)!;
-    }
-
     public static T MillerLoop<T, D>(D driver) where D : IMillerLoopDriver<T>
     {
         var f = driver.One;
