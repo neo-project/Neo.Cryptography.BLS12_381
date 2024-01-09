@@ -79,7 +79,7 @@ public readonly struct Fp6 : IEquatable<Fp6>, INumber<Fp6>
 
     public byte[] ToArray()
     {
-        byte[] result = GC.AllocateUninitializedArray<byte>(Size);
+        byte[] result = new byte[Size];
         TryWrite(result);
         return result;
     }

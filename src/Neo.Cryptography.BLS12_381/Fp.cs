@@ -116,7 +116,7 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
 
     public byte[] ToArray()
     {
-        byte[] result = GC.AllocateUninitializedArray<byte>(Size);
+        byte[] result = new byte[Size];
         TryWrite(result);
         return result;
     }
@@ -141,7 +141,11 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
 
     public override string ToString()
     {
-        return "0x" + Convert.ToHexString(ToArray()).ToLowerInvariant();
+        var output = string.Empty;
+        foreach (var b in ToArray())
+            output += b.ToString("x2");
+
+        return "0x" + output;
     }
 
     public bool LexicographicallyLargest()

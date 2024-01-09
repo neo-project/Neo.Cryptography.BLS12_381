@@ -80,7 +80,7 @@ public readonly struct Fp12 : IEquatable<Fp12>, INumber<Fp12>
 
     public byte[] ToArray()
     {
-        byte[] result = GC.AllocateUninitializedArray<byte>(Size);
+        byte[] result = new byte[Size];
         TryWrite(result);
         return result;
     }
