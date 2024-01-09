@@ -141,12 +141,11 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
 
     public override string ToString()
     {
-        var data = ToArray();
         var output = string.Empty;
-        foreach (var b in data)
+        foreach (var b in ToArray())
             output += b.ToString("x2");
 
-        return "0x" + output.ToLowerInvariant();
+        return "0x" + output;
     }
 
     public bool LexicographicallyLargest()
