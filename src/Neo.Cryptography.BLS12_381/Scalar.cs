@@ -16,7 +16,6 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
     public const int SizeL = Size / sizeof(ulong);
     public static readonly Scalar Default = new();
 
-    static int INumber<Scalar>.Size => Size;
     public static ref readonly Scalar Zero => ref Default;
     public static ref readonly Scalar One => ref R;
 
@@ -491,4 +490,13 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
         ReadOnlySpan<ulong> tmp = stackalloc[] { d0 & mask, d1 & mask, d2 & mask, d3 & mask };
         return MemoryMarshal.Cast<ulong, Scalar>(tmp)[0];
     }
+
+    #region Instance math methods
+
+    public Scalar Negate() => -this;
+    public Scalar Multiply(in Scalar value) => this * value;
+    public Scalar Sum(in Scalar value) => this + value;
+    public Scalar Subtract(in Scalar value) => this - value;
+
+    #endregion
 }

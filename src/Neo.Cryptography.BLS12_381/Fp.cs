@@ -17,7 +17,6 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
 
     private static readonly Fp _zero = new();
 
-    static int INumber<Fp>.Size => Size;
     public static ref readonly Fp Zero => ref _zero;
     public static ref readonly Fp One => ref R;
 
@@ -465,4 +464,13 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
 
         return MontgomeryReduce(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
     }
+
+    #region Instance math methods
+
+    public Fp Negate() => -this;
+    public Fp Multiply(in Fp value) => this * value;
+    public Fp Sum(in Fp value) => this + value;
+    public Fp Subtract(in Fp value) => this - value;
+
+    #endregion
 }
