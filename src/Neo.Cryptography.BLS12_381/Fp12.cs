@@ -17,7 +17,6 @@ public readonly struct Fp12 : IEquatable<Fp12>, INumber<Fp12>
     private static readonly Fp12 _zero = new();
     private static readonly Fp12 _one = new(in Fp6.One);
 
-    //static int INumber<Fp12>.Size => Size;
     public static ref readonly Fp12 Zero => ref _zero;
     public static ref readonly Fp12 One => ref _one;
 
@@ -47,7 +46,7 @@ public readonly struct Fp12 : IEquatable<Fp12>, INumber<Fp12>
     public static Fp12 FromBytes(ReadOnlySpan<byte> data)
     {
         if (data.Length != Size)
-            throw new FormatException($"The argument `{nameof(data)}` should contain {Size} bytes.");
+            throw new FormatException($"The argument `{nameof(data)}` must contain {Size} bytes.");
         Fp6 c0 = Fp6.FromBytes(data[Fp6.Size..]);
         Fp6 c1 = Fp6.FromBytes(data[..Fp6.Size]);
         return new(in c0, in c1);
@@ -196,4 +195,13 @@ public readonly struct Fp12 : IEquatable<Fp12>, INumber<Fp12>
 
         return new Fp12(in c0, in c1);
     }
+
+    #region Instance math methods
+
+    public Fp12 Negate() => -this;
+    public Fp12 Multiply(in Fp12 value) => this * value;
+    public Fp12 Sum(in Fp12 value) => this + value;
+    public Fp12 Subtract(in Fp12 value) => this - value;
+
+    #endregion
 }

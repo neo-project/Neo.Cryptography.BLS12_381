@@ -205,7 +205,7 @@ public readonly struct G1Projective : IEquatable<G1Projective>
     {
         int length = b.Length;
         if (length != 32)
-            throw new ArgumentException($"The argument {nameof(b)} should be 32 bytes.");
+            throw new ArgumentException($"The argument {nameof(b)} must be 32 bytes.");
 
         G1Projective acc = Identity;
 

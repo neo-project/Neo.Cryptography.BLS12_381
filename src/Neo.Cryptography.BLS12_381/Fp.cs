@@ -17,7 +17,6 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
 
     private static readonly Fp _zero = new();
 
-    //static int INumber<Fp>.Size => Size;
     public static ref readonly Fp Zero => ref _zero;
     public static ref readonly Fp One => ref R;
 
@@ -26,7 +25,7 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
     public static Fp FromBytes(ReadOnlySpan<byte> data)
     {
         if (data.Length != Size)
-            throw new FormatException($"The argument `{nameof(data)}` should contain {Size} bytes.");
+            throw new FormatException($"The argument `{nameof(data)}` must contain {Size} bytes.");
 
         Span<ulong> tmp = stackalloc ulong[SizeL];
         BinaryPrimitives.TryReadUInt64BigEndian(data[0..8], out tmp[5]);
@@ -63,6 +62,9 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
 
     internal static Fp FromRawUnchecked(ulong[] values)
     {
+        if (values.Length != SizeL)
+            throw new FormatException($"The argument `{nameof(values)}` must contain {SizeL} entries.");
+
         return MemoryMarshal.Cast<ulong, Fp>(values)[0];
     }
 
@@ -467,4 +469,13 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
 
         return MontgomeryReduce(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
     }
+
+    #region Instance math methods
+
+    public Fp Negate() => -this;
+    public Fp Multiply(in Fp value) => this * value;
+    public Fp Sum(in Fp value) => this + value;
+    public Fp Subtract(in Fp value) => this - value;
+
+    #endregion
 }
