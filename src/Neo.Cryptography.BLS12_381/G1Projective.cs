@@ -1,3 +1,14 @@
+// Copyright (C) 2015-2025 The Neo Project.
+//
+// G1Projective.cs file belongs to the neo project and is free
+// software distributed under the MIT software license, see the
+// accompanying file LICENSE in the main directory of the
+// repository or http://www.opensource.org/licenses/mit-license.php
+// for more details.
+//
+// Redistribution and use in source and binary forms with or without
+// modifications are permitted.
+
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using static Neo.Cryptography.BLS12_381.Constants;
@@ -205,7 +216,7 @@ public readonly struct G1Projective : IEquatable<G1Projective>
     {
         int length = b.Length;
         if (length != 32)
-            throw new ArgumentException($"The argument {nameof(b)} must be 32 bytes.");
+            throw new ArgumentException($"Argument {nameof(b)} must be exactly 32 bytes.", nameof(b));
 
         G1Projective acc = Identity;
 
@@ -259,7 +270,7 @@ public readonly struct G1Projective : IEquatable<G1Projective>
     {
         int length = p.Length;
         if (length != q.Length)
-            throw new ArgumentException($"{nameof(p)} and {nameof(q)} must have the same length.");
+            throw new ArgumentException($"Arrays {nameof(p)} and {nameof(q)} must have the same length.");
 
         Span<Fp> x = stackalloc Fp[length];
         Fp acc = Fp.One;

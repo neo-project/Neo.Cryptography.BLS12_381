@@ -1,3 +1,14 @@
+// Copyright (C) 2015-2025 The Neo Project.
+//
+// Fp.cs file belongs to the neo project and is free
+// software distributed under the MIT software license, see the
+// accompanying file LICENSE in the main directory of the
+// repository or http://www.opensource.org/licenses/mit-license.php
+// for more details.
+//
+// Redistribution and use in source and binary forms with or without
+// modifications are permitted.
+
 using System.Buffers.Binary;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
@@ -269,7 +280,7 @@ public readonly struct Fp : IEquatable<Fp>, INumber<Fp>
     {
         int length = a.Length;
         if (length != b.Length)
-            throw new ArgumentException("The lengths of the two arrays must be the same.");
+            throw new ArgumentException("Arrays must have the same length.");
 
         Fp result;
         ReadOnlySpan<ulong> au = MemoryMarshal.Cast<Fp, ulong>(a);

@@ -1,3 +1,14 @@
+// Copyright (C) 2015-2025 The Neo Project.
+//
+// UT_Fp2.cs file belongs to the neo project and is free
+// software distributed under the MIT software license, see the
+// accompanying file LICENSE in the main directory of the
+// repository or http://www.opensource.org/licenses/mit-license.php
+// for more details.
+//
+// Redistribution and use in source and binary forms with or without
+// modifications are permitted.
+
 using System.Collections;
 using static Neo.Cryptography.BLS12_381.ConstantTimeUtility;
 
@@ -359,8 +370,7 @@ public class UT_Fp2
 
         // 2155129644831861015726826462986972654175647013268275306775721078997042729172900466542651176384766902407257452753362*u + 2796889544896299244102912275102369318775038861758288697415827248356648685135290329705805931514906495247464901062529
         // is nonsquare.
-        Assert.ThrowsException<ArithmeticException>(() =>
-            new Fp2(Fp.FromRawUnchecked(new ulong[]
+        Assert.ThrowsExactly<ArithmeticException>(() => _ = new Fp2(Fp.FromRawUnchecked(new ulong[]
             {
                 0xc5fa_1bc8_fd00_d7f6,
                 0x3830_ca45_4606_003b,
@@ -418,7 +428,7 @@ public class UT_Fp2
         }));
         Assert.AreEqual(b, a.Invert());
 
-        Assert.ThrowsException<DivideByZeroException>(() => Fp2.Zero.Invert());
+        Assert.ThrowsExactly<DivideByZeroException>(() => _ = Fp2.Zero.Invert());
     }
 
     [TestMethod]
