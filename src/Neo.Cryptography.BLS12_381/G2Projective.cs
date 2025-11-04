@@ -1,3 +1,14 @@
+// Copyright (C) 2015-2025 The Neo Project.
+//
+// G2Projective.cs file belongs to the neo project and is free
+// software distributed under the MIT software license, see the
+// accompanying file LICENSE in the main directory of the
+// repository or http://www.opensource.org/licenses/mit-license.php
+// for more details.
+//
+// Redistribution and use in source and binary forms with or without
+// modifications are permitted.
+
 using System.Buffers.Binary;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
@@ -302,7 +313,7 @@ public readonly struct G2Projective : IEquatable<G2Projective>
     {
         int length = p.Length;
         if (length != q.Length)
-            throw new ArgumentException($"{nameof(p)} and {nameof(q)} must have the same length.");
+            throw new ArgumentException($"Arrays {nameof(p)} and {nameof(q)} must have the same length.");
 
         Span<Fp2> x = stackalloc Fp2[length];
         Fp2 acc = Fp2.One;

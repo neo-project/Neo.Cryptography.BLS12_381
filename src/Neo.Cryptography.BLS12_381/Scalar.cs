@@ -1,3 +1,14 @@
+// Copyright (C) 2015-2025 The Neo Project.
+//
+// Scalar.cs file belongs to the neo project and is free
+// software distributed under the MIT software license, see the
+// accompanying file LICENSE in the main directory of the
+// repository or http://www.opensource.org/licenses/mit-license.php
+// for more details.
+//
+// Redistribution and use in source and binary forms with or without
+// modifications are permitted.
+
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -109,7 +120,7 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
     public override string ToString()
     {
         byte[] bytes = ToArray();
-        StringBuilder sb = new();
+        StringBuilder sb = new(2 + (bytes.Length * 2));
         sb.Append("0x");
         for (int i = bytes.Length - 1; i >= 0; i--)
             sb.AppendFormat("{0:x2}", bytes[i]);
@@ -245,7 +256,7 @@ public readonly struct Scalar : IEquatable<Scalar>, INumber<Scalar>
     public Scalar Pow(ulong[] by)
     {
         if (by.Length != SizeL)
-            throw new ArgumentException($"The length of the parameter `{nameof(by)}` must be {SizeL}.");
+            throw new ArgumentException($"Parameter {nameof(by)} must have length {SizeL}.", nameof(by));
 
         var res = One;
         for (int j = by.Length - 1; j >= 0; j--)

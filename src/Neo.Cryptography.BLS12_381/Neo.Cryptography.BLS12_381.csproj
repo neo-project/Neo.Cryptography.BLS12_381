@@ -1,15 +1,25 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>0.3.0</VersionPrefix>
-    <TargetFrameworks>netstandard2.1;net7.0</TargetFrameworks>
+    <Copyright>2015-2025 The Neo Project</Copyright>
+    <VersionPrefix>3.9.0</VersionPrefix>
+    <Authors>The Neo Project</Authors>
+    <PackageProjectUrl>https://github.com/neo-project/Neo.Cryptography.BLS12_381</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/neo-project/Neo.Cryptography.BLS12_381.git</RepositoryUrl>
+    <TargetFrameworks>netstandard2.1;net9.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <LangVersion>11.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Neo.Cryptography.BLS12_381.Tests" />
   </ItemGroup>
 
 </Project>
